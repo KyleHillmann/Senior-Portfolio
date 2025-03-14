@@ -1,0 +1,369 @@
+:root {
+    --primary: #121212;
+    --secondary: #1f1f1f;
+    --accent: #34d399;
+    --text: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 6px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background-color: var(--primary);
+    scroll-behavior: smooth;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+.animate-fade { animation: fadeIn 0.8s var(--ease) forwards; }
+.animate-up { animation: fadeInUp 0.8s var(--ease) forwards; animation-delay: 0.2s; }
+.animate-scale { animation: scaleUp 0.8s var(--ease) forwards; }
+
+/* --- Progress Bar --- */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary);
+    z-index: 999;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--accent);
+    width: 0;
+    transition: width 0.3s var(--ease);
+}
+
+/* --- Header/Hero Section --- */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95));
+}
+
+.header-content { max-width: 800px; margin: 0 auto; }
+
+.portrait-frame {
+    width: 250px;
+    height: 350px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    animation: scaleUp 0.8s var(--ease) forwards;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    animation: fadeIn 0.8s var(--ease) forwards;
+}
+
+.header p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s var(--ease) forwards;
+    animation-delay: 0.2s;
+}
+
+/* --- Navigation --- */
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: var(--primary);
+    z-index: 998;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.nav-item a {
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s var(--ease);
+    display: block;
+}
+
+.nav-item a:hover,
+.nav-item a:focus {
+    color: var(--accent);
+    outline: none;
+}
+
+/* --- Sections --- */
+.content-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    opacity: 0;
+}
+
+.content-section.active {
+    opacity: 1;
+    animation: fadeIn 0.8s var(--ease) forwards;
+}
+
+.section-header {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    text-align: center;
+}
+
+/* --- Grid --- */
+.grid-2col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+.academic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    grid-template-areas:
+        "goals samples"
+        "reflection reflection";
+}
+
+.academic-grid .card:nth-child(1) { grid-area: goals; }
+.academic-grid .card:nth-child(2) { grid-area: samples; }
+.academic-grid .reflection { grid-area: reflection; }
+
+.personal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 3rem;
+    grid-template-areas:
+        "narrative goals"
+        "activities community";
+}
+
+/* --- Cards --- */
+.card {
+    padding: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+    min-height: 250px;
+}
+
+.reflection {
+    padding: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.reflection { animation-delay: 0.3s; }
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+/* --- Timeline --- */
+.timeline {
+    position: relative;
+    margin: 4rem 0;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--accent);
+}
+
+.timeline-item {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+
+/* --- Image Modal --- */
+.image-container {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    transition: transform 0.3s var(--ease);
+}
+
+.image-container:hover { transform: scale(1.05); }
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-container.expanded {
+    width: 80vw;
+    max-width: 800px;
+    height: auto;
+    max-height: 80vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+.image-container.expanded img { width: 100%; height: auto; }
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover { background-color: rgba(0, 0, 0, 0.9); }
+
+/* --- Buttons --- */
+button {
+    background-color: var(--accent);
+    color: var(--primary);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s var(--ease);
+}
+
+button:hover { background-color: #27ae60; }
+
+/* --- Work Sample Items --- */
+.work-sample-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.work-sample-item > * {
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.work-sample-item span { flex-grow: 1; }
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--secondary);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- Accessibility --- */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
