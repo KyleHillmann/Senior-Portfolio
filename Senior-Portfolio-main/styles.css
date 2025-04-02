@@ -1,0 +1,726 @@
+:root {
+    --primary: #121212;
+    --secondary: #1f1f1f;
+    --accent: #34d399;
+    --text: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 6px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background-color: var(--primary);
+    scroll-behavior: smooth;
+    line-height: 1.6;
+    padding: 0 1rem; /* Add padding to the body for better spacing */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+.animate-fade { animation: fadeIn 0.8s var(--ease) forwards; }
+.animate-up { animation: fadeInUp 0.8s var(--ease) forwards; animation-delay: 0.2s; }
+.animate-scale { animation: scaleUp 0.8s var(--ease) forwards; }
+
+/* --- Progress Bar --- */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary);
+    z-index: 999;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--accent);
+    width: 0;
+    transition: width 0.3s var(--ease);
+}
+
+/* --- Header/Hero Section --- */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 3rem 1rem; /* Increase padding for header */
+    text-align: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95));
+    overflow: hidden; /* Prevent overflow in header */
+}
+
+.header-content { max-width: 800px; margin: 0 auto; }
+
+.portrait-frame {
+    width: 250px;
+    height: 350px;
+    border-radius: var(--border-radius);
+    border: 3px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    animation: scaleUp 0.8s var(--ease) forwards;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    animation: fadeIn 0.8s var(--ease) forwards;
+}
+
+.header p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s var(--ease) forwards;
+    animation-delay: 0.2s;
+}
+
+/* --- Navigation --- */
+.navbar {
+    position: sticky; /* Keep it at the top when scrolling */
+    top: 0;
+    width: 100vw; /* Use viewport width to ensure it stretches across */
+    left: 50%; /* Center it */
+    margin-left: -50vw; /* Offset to the left */
+    padding: 0; /* Remove horizontal padding */
+    background-color: var(--primary);
+    z-index: 998;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Prevent overflow in navbar */
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.nav-item a {
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s var(--ease);
+    display: block;
+}
+
+.nav-item a:hover,
+.nav-item a:focus {
+    color: var(--accent);
+    outline: none;
+}
+
+/* --- Sections --- */
+.content-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    opacity: 0;
+    overflow: visible; /* Prevent overflow in content sections */
+}
+
+.content-section.active {
+    opacity: 1;
+    animation: fadeIn 0.8s var(--ease) forwards;
+}
+
+.section-header {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 2rem; /* Add margin to section headers */
+    margin-bottom: 1rem; /* Add margin below section headers */
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+    text-align: center;
+    overflow: visible; /* Prevent overflow in section headers */
+}
+
+/* --- Grid --- */
+.grid-2col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    max-width: 100%;
+    overflow: hidden; /* Prevent overflow in grid */
+}
+
+.academic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    grid-template-areas:
+        "goals samples"
+        "reflection reflection";
+}
+
+.academic-grid .card:nth-child(1) { grid-area: goals; }
+.academic-grid .card:nth-child(2) { grid-area: samples; }
+.academic-grid .reflection { grid-area: reflection; }
+
+.personal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    grid-template-areas:
+        "narrative narrative narrative"
+        "goals activities community"
+        "reflection reflection reflection";
+}
+
+.personal-grid .card.full-width {
+    grid-column: 1 / -1;
+}
+
+.personal-grid .card:nth-child(1) { grid-area: narrative; }
+.personal-grid .card:nth-child(2) { grid-area: goals; }
+.personal-grid .card:nth-child(3) { grid-area: activities; }
+.personal-grid .card:nth-child(4) { grid-area: community; }
+.personal-grid .reflection { grid-area: reflection; }
+
+/* --- Cards --- */
+.card {
+    padding: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+    min-height: 250px;
+    margin-bottom: 1.5rem; /* Add margin between cards */
+    overflow: visible; /* Prevent overflow in cards */
+}
+
+.card-simple {
+    /* Inherit styles from .card */
+    padding: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+    min-height: 250px;
+    margin-bottom: 1.5rem; /* Add margin between cards */
+    overflow: visible; /* Prevent overflow in cards */
+}
+
+/* Example of additional styles for specific cards */
+.card-simple-goals {
+    background-color: #e0f7fa; /* Light blue background for goals card */
+}
+
+.card-simple-activities {
+    background-color: #ffe0b2; /* Light orange background for activities card */
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.card h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+/* --- Timeline --- */
+.timeline {
+    position: relative;
+    margin: 4rem 0;
+    padding-left: 2rem;
+    overflow: hidden; /* Prevent overflow in timeline */
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--accent);
+}
+
+.timeline-item {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    overflow: hidden; /* Prevent overflow in timeline items */
+}
+
+.timeline-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+
+/* --- Image Modal --- */
+.image-container {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    transition: transform 0.3s var(--ease);
+    overflow: hidden; /* Prevent overflow in image container */
+}
+
+.image-container:hover { transform: scale(1.05); }
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-container.expanded {
+    width: 80vw;
+    max-width: 800px;
+    height: auto;
+    max-height: 80vh;
+    display: flex;
+    align-items: flex-start;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    overflow: hidden; /* Prevent overflow in expanded image container */
+}
+
+.image-container.expanded img { width: 100%; height: auto; }
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover { background-color: rgba(0, 0, 0, 0.9); }
+
+/* --- Buttons --- */
+button {
+    background-color: var(--accent);
+    color: var(--primary);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s var(--ease);
+}
+
+button:hover { background-color: #27ae60; }
+
+/* --- Work Sample Items --- */
+.work-sample-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.work-sample-item > * {
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.work-sample-item span { flex-grow: 1; }
+
+/* --- Footer --- */
+.footer {
+    position: relative; /* Ensure it is positioned relative to its parent */
+    width: 100vw; /* Use viewport width to ensure it stretches across */
+    left: 50%; /* Center it */
+    right: 50%; /* Center it */
+    margin-left: -50vw; /* Offset to the left */
+    margin-right: -50vw; /* Offset to the right */
+    text-align: center;
+    background-color: var(--secondary);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    overflow: hidden; /* Prevent overflow in footer */
+}
+
+/* --- Accessibility --- */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* --- Resume Specific Styles --- */
+.text-primary {
+    color: #2ecc71;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.text-gray {
+    color: #cccccc;
+}
+
+.text-black {
+    color: #000000;
+}
+
+.resume-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 5px;
+}
+
+.resume-header {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.resume-header h1 {
+    color: #2ecc71;
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+}
+
+.resume-header .title {
+    color: #000000;
+    font-size: 1.2rem;
+    padding: 0.5rem 1.5rem;
+    background-color: #2ecc71;
+    display: inline-block;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.resume-header .title::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    right: 0;
+    width: 100vw;
+    height: 2px;
+    background-color: #2ecc71;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.resume-header .title::before {
+    display: none;
+}
+
+.contact-info {
+    margin: 0rem 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.resume-section {
+    margin: 2rem 0;
+}
+
+.resume-section h2 {
+    color: #2ecc71;
+    margin-bottom: 1rem;
+}
+
+.resume-grid {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 2rem;
+}
+
+.left-column {
+    background-color: #2ecc71;
+    padding: 1.5rem;
+    color: #000000;
+    border-radius: 5px;
+}
+
+.right-column {
+    padding: 1.5rem;
+}
+
+.work-item {
+    margin-bottom: 1.5rem;
+}
+
+.work-item h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.work-item .workplace {
+    color: #cccccc;
+    margin-bottom: 0.5rem;
+}
+
+.work-item ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: #cccccc;
+}
+
+.references {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.reference-item {
+    background-color: rgba(46, 204, 113, 0.1);
+    padding: 1.39rem;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.reference-item h3 {
+    color: #2ecc71;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.reference-item p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+@media print {
+    .navbar {
+        display: none; /* Hide the navigation bar */
+    }
+    
+    .footer {
+        display: none; /* Hide the footer */
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 0.85rem; /* Slightly reduce font size for print */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+    }
+
+    .resume-container {
+        max-width: 100%; /* Ensure full width for printing */
+        margin: 0; /* Center the container */
+        padding: 1rem; /* Reduce padding for better spacing */
+    }
+
+    .resume-header h1 {
+        font-size: 2.2rem; /* Adjust header font size */
+    }
+
+    .resume-header .title {
+        font-size: 1.1rem; /* Adjust title font size */
+    }
+
+    .resume-section h2 {
+        font-size: 1.4rem; /* Adjust section header font size */
+    }
+
+    .resume-grid {
+        display: grid; /* Keep grid layout */
+        grid-template-columns: 30% 70%; /* Maintain original column structure */
+        gap: 1rem; /* Reduce gap between columns */
+    }
+
+    .left-column, .right-column {
+        width: 100%; /* Set columns to take up full width */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .work-item {
+        margin-bottom: 0.5rem; /* Reduce space between work items */
+    }
+
+    .references {
+        display: flex; /* Change to flexbox for horizontal layout */
+        justify-content: space-between; /* Space out references */
+        margin-top: 1rem; /* Add some space above references */
+        gap: 1rem; /* Add consistent gap between reference items */
+    }
+
+    .reference-item {
+        margin: 0; /* Remove bottom margin for horizontal layout */
+        flex: 1; /* Allow items to grow equally */
+        padding: 1rem; /* Add padding for consistent spacing */
+        background-color: rgba(46, 204, 113, 0.1); /* Maintain background color */
+        border-radius: 5px; /* Maintain border radius */
+    }
+}
+
+/* --- Reflection --- */
+.reflection {
+    padding: 2rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    opacity: 0;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+    overflow: hidden; /* Prevent overflow in reflection */
+}
+
+.reflection:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.document-container {
+    display: flex;
+    flex-direction: column; /* Stack title and button vertically */
+    align-items: center; /* Center align items */
+    margin-bottom: 1rem; /* Space between document containers */
+    overflow: hidden; /* Prevent overflow in document container */
+}
+
+.grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Create a 2-column layout */
+    gap: 2rem; /* Space between grid items */
+    max-width: 100%; /* Ensure it fits within the container */
+    overflow: hidden; /* Prevent overflow in grid */
+}
+
+.fullscreen-button {
+    background-color: var(--accent);
+    color: var(--primary);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s var(--ease);
+    margin-top: 1rem; /* Add margin above buttons */
+    width: 100%; /* Make buttons full width */
+}
+
+.fullscreen-button:hover {
+    background-color: #27ae60; /* Darker shade on hover */
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0; /* Ensure it covers the left side */
+    top: 0; /* Ensure it covers the top */
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    overflow: visible; /* Prevent overflow in modal */
+}
+
+.modal-content {
+    display: block;
+    width: 100%; /* Full width of modal */
+    height: 100%; /* Full height of modal */
+    background-color: #fefefe;
+    border: none;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    border-radius: var(--border-radius);
+}
+
+#pdfIframe {
+    width: 100vw; /* Full width of modal */
+    height: 100vh; /* Full height of modal */
+    border: none; /* Remove border */
+    display: block; /* Ensure it behaves as a block element */
+}
+
+.close {
+    color: #aaa;
+    position: absolute; /* Position absolute for close button */
+    top: 10px; /* Position from the top */
+    right: 20px; /* Position from the right */
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ensure images and iframes are responsive */
+img, iframe {
+    max-width: 100%; /* Prevent overflow */
+    height: auto; /* Maintain aspect ratio */
+} 

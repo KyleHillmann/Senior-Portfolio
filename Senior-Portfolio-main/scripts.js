@@ -33,6 +33,13 @@ document.addEventListener('click', function (event) {
     }
 });
 
+// --- Modal Background Click to Close ---
+document.getElementById('pdfModal').addEventListener('click', function(event) {
+    if (event.target === this) {
+        closeModal();
+    }
+});
+
 // --- Progress Bar ---
 function updateProgressBar() {
     const scrollPosition = window.scrollY || window.pageYOffset;
@@ -64,3 +71,15 @@ const observer = new IntersectionObserver(entries => {
 sections.forEach(section => {
     observer.observe(section);
 });
+
+// Function to open the modal and set the iframe source
+function openModal(pdfPath) {
+    document.getElementById('pdfIframe').src = pdfPath;
+    document.getElementById('pdfModal').style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('pdfModal').style.display = 'none';
+    document.getElementById('pdfIframe').src = ''; // Clear the iframe source
+}

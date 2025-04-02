@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Kyle Hillmann - Senior Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -37,19 +37,18 @@
         <section class="content-section active" id="personal">
             <h2 class="section-header">Personal</h2>
             <div class="personal-grid">
-                <div class="card">
+                <div class="card card-personal-narrative">
                     <h3>Personal Narrative</h3>
-                    <p>I'm passionate about technology—whether it's repairing electronics, building computers, or coding. A recent project involved transforming an old computer into a home network server managing our family VPN and NAS.</p>
+                    <p>I'm passionate about technology—whether it's repairing electronics, building computers, or coding. My curiosity first sparked at the age of 13, binge-watching YouTube creators like Linus Tech Tips dissect gaming rigs and tech innovations. By 16, I talked my dad into buying an old desktop—tinkering with upgrades, troubleshooting parts, and finally getting it to run games smoothly became my obsession. That old machine opened my eyes to how hands-on experimentation turns ideas into solutions. Today, that same drive led me to transform an aging computer into a home network managing our family's VPN and NAS—proof that old tech always has new stories to tell.</p>
                 </div>
-                <div class="card">
+                <div class="card card-goals">
                     <h3>Goals &amp; Reflection</h3>
                     <p>
                         <span aria-hidden="true">☑</span> <span class="sr-only">Completed:</span> Enroll at UW-Stout (Electrical Engineering)<br>
                         <span aria-hidden="true">☑</span> <span class="sr-only">Completed:</span> 150+ volunteer hours (Current: 176)<br>
-                        Reflection: Need to improve time management.
                     </p>
                 </div>
-                <div class="card">
+                <div class="card card-activities">
                     <h3>Activities</h3>
                     <p>
                         Yearbook Club<br>
@@ -57,13 +56,16 @@
                         Key Club
                     </p>
                 </div>
-                <div class="card">
+                <div class="card card-community">
                     <h3>Community Service</h3>
                     <p>
                         Key Club Member (2021-2023)<br>
                         Benjamines House (140 hours)<br>
                         Toys for Tots (36 hours)
                     </p>
+                </div>
+                <div class="reflection">
+                    <p>Reflection: Need to improve time management and balance between academic and extracurricular activities.</p>
                 </div>
             </div>
         </section>
@@ -116,7 +118,40 @@
                         <span aria-hidden="true">✓</span> <span class="sr-only">Completed:</span> Resume: Highlighting On Computer Skills<br>
                         <span aria-hidden="true">☒</span>  Cover Letter: No Completed Cover Letter<br>
                         <span aria-hidden="true">✓</span> <span class="sr-only">Completed:</span> References: 3 Professional Contacts<br>
-                        <span aria-hidden="true">☒</span> <span class="sr-only">Completed:</span> Recommendation Letters: No Current Letters Of Recommendations</p>
+                        <span aria-hidden="true">☒</span> <span class="sr-only">Completed:</span> Recommendation Letters: No Current Letters Of Recommendations
+                    </p>
+                </div>
+            </div>
+
+            <!-- Moved Document Section Content Here -->
+            <div class="card full-width">
+                <h3>Documents</h3>
+                <div class="grid-2col">
+                    <div class="document-container">
+                        <h4>Cover Letter</h4>
+                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                    </div>
+                    <div class="document-container">
+                        <h4>Resume</h4>
+                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                    </div>
+                    <div class="document-container">
+                        <h4>Letter of Recommendation 1</h4>
+                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                    </div>
+                    <div class="document-container">
+                        <h4>Letter of Recommendation 2</h4>
+                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Moved Content -->
+
+            <!-- Modal Structure -->
+            <div id="pdfModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <iframe id="pdfIframe" width="100%" height="100%" frameborder="0"></iframe>
                 </div>
             </div>
         </section>
@@ -171,6 +206,5 @@
     </footer>
 
     <script src="scripts.js"></script>
-
 
 </body></html>
