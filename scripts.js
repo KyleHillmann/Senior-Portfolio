@@ -60,14 +60,15 @@ const observer = new IntersectionObserver(entries => {
 sections.forEach(section => observer.observe(section));
 
 // PDF Modal Functions
-async function openModal(pdfPath) {
+function openModal(pdfPath) {
     const modal = document.getElementById('pdfModal');
-    const canvas = document.getElementById('pdfCanvas');
-    const context = canvas.getContext('2d');
+    const iframe = document.getElementById('pdfIframe');
 
     console.log('Opening PDF:', pdfPath);
+    iframe.src = `${pdfPath}#toolbar=0&navpanes=0`;
     modal.style.display = 'block';
-
+    iframe.style.height = '80vh'; // Fixed height
+}
     try {
         // Load the PDF
         const loadingTask = pdfjsLib.getDocument(pdfPath);
@@ -76,7 +77,7 @@ async function openModal(pdfPath) {
 
         // Calculate total height based on page dimensions
         let totalHeight = 0;
-        const scale = 1.5; // Adjust scale for better resolution
+        const scale = 1.5; // Adjust scale for resolution
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
             const viewport = page.getViewport({ scale });
@@ -89,6 +90,13 @@ async function openModal(pdfPath) {
         canvas.height = totalHeight;
         canvas.style.width = '100%'; // Responsive width
         canvas.style.height = `${totalHeight}px`;
+
+        // Cap the modal height
+        const maxHeight = window.innerHeight * 0.9;
+        if (totalHeight > maxHeight) {
+            canvas.style.height = `${maxHeight}px`;
+            modal.style.overflowY = 'auto';
+        }
 
         // Render all pages
         let currentHeight = 0;
@@ -116,7 +124,9 @@ function closeModal() {
     const modal = document.getElementById('pdfModal');
     const canvas = document.getElementById('pdfCanvas');
     modal.style.display = 'none';
-    canvas.width = 0; // Clear canvas
-    canvas.height = 0;
-    canvas.style.height = '';
+    if (canvas) {
+        canvas.width = 0; // Clear canvas
+        canvas.height = 0;
+        canvas.style.height = '';
+    }
 }
