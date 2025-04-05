@@ -60,42 +60,63 @@ const observer = new IntersectionObserver(entries => {
 sections.forEach(section => observer.observe(section));
 
 // PDF Modal Functions
-function openModal(pdfPath) {
+async function openModal(pdfPath) {
     const modal = document.getElementById('pdfModal');
-    const iframe = document.getElementById('pdfIframe');
+    const canvas = document.getElementById('pdfCanvas');
+    const context = canvas.getContext('2d');
 
     console.log('Opening PDF:', pdfPath);
-    iframe.src = `${pdfPath}#toolbar=0&navpanes=0`;
     modal.style.display = 'block';
 
-    iframe.onload = function() {
-        console.log('PDF iframe loaded successfully');
-        try {
-            const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-            console.log('PDF content height:', contentHeight);
-            if (contentHeight && contentHeight > 0) {
-                // Cap the height at 90vh to avoid overflowing the modal
-                const maxHeight = window.innerHeight * 0.9;
-                iframe.style.height = `${Math.min(contentHeight, maxHeight)}px`;
-                console.log('Set iframe height to:', iframe.style.height);
-            } else {
-                console.log('Invalid height detected, using fallback');
-                iframe.style.height = '80vh';
-            }
-        } catch (e) {
-            console.error('Height adjustment failed:', e.message);
-            iframe.style.height = '80vh';
-        }
-    };
+    try {
+        // Load the PDF
+        const loadingTask = pdfjsLib.getDocument(pdfPath);
+        const pdf = await loadingTask.promise;
+        console.log('PDF loaded successfully, pages:', pdf.numPages);
 
-    // Initial height in case onload doesn't fire immediately
-    iframe.style.height = '80vh';
+        // Calculate total height based on page dimensions
+        let totalHeight = 0;
+        const scale = 1.5; // Adjust scale for better resolution
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+            totalHeight += viewport.height;
+        }
+        console.log('Total PDF height:', totalHeight);
+
+        // Set canvas dimensions
+        canvas.width = 800; // Fixed width, adjust as needed
+        canvas.height = totalHeight;
+        canvas.style.width = '100%'; // Responsive width
+        canvas.style.height = `${totalHeight}px`;
+
+        // Render all pages
+        let currentHeight = 0;
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+            context.translate(0, viewport.height); // Move to next page position
+            currentHeight += viewport.height;
+        }
+        console.log('Rendered PDF with height:', totalHeight);
+    } catch (e) {
+        console.error('PDF loading/rendering failed:', e.message);
+        canvas.height = 600; // Fallback height
+        canvas.style.height = '80vh';
+        context.fillText('Error loading PDF', 10, 50);
+    }
 }
 
 function closeModal() {
     const modal = document.getElementById('pdfModal');
-    const iframe = document.getElementById('pdfIframe');
+    const canvas = document.getElementById('pdfCanvas');
     modal.style.display = 'none';
-    iframe.src = '';
-    iframe.style.height = '';
+    canvas.width = 0; // Clear canvas
+    canvas.height = 0;
+    canvas.style.height = '';
 }

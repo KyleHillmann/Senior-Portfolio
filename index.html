@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="pdfjs/build/pdf.js"></script> <!-- Include PDF.js -->
 </head>
 <body class="iframe-mode">
     <div class="progress-container">
@@ -137,7 +138,7 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeModal()">×</span>
                     <div class="pdf-container">
-                        <iframe id="pdfIframe" src="" name="viewCategory"></iframe>
+                        <canvas id="pdfCanvas"></canvas> <!-- Replace iframe with canvas -->
                     </div>
                 </div>
             </div>
