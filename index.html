@@ -15,7 +15,15 @@
     </style>
     <script language="javascript" type="text/javascript">
         function resizeIframe(obj) {
-            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+            // Use a timeout to allow the PDF to load before measuring its height
+            setTimeout(() => {
+                const body = obj.contentWindow.document.body;
+                if (body) {
+                    obj.style.height = body.scrollHeight + 'px';
+                } else {
+                    console.error("Body not found in iframe");
+                }
+            }, 500); // Adjust the timeout duration as needed
         }
 
         // Function to open the modal and set the iframe source
@@ -153,7 +161,7 @@
                 <div class="grid-2col">
                     <div class="document-container">
                         <h4>Cover Letter</h4>
-                        <button onclick="openModal('https://kylehillmann.run.place/Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Resume</h4>
@@ -161,7 +169,7 @@
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 1</h4>
-                        <button onclick="openModal('https://kylehillmann.run.place/Kyle Hillman - Letter of Recommendation 1.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 2</h4>
@@ -175,7 +183,9 @@
             <div id="pdfModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal()">&times;</span>
-                    <iframe onload='javascript:resizeIframe(this);' frameborder="0" align="texttop" id="pdfIframe" width="100%" height="1px" src="" name="viewCategory"></iframe>
+                    <div class="pdf-container">
+                        <iframe id="pdfIframe" src="" name="viewCategory"></iframe>
+                    </div>
                 </div>
             </div>
         </section>

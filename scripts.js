@@ -33,11 +33,6 @@ document.addEventListener('click', function (event) {
     }
 });
 
-// --- Function to resize iframe based on content ---
-function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-}
-
 // --- Modal Background Click to Close ---
 document.getElementById('pdfModal').addEventListener('click', function(event) {
     if (event.target === this) {
@@ -79,8 +74,30 @@ sections.forEach(section => {
 
 // Function to open the modal and set the iframe source
 function openModal(pdfPath) {
-    document.getElementById('pdfIframe').src = pdfPath;
-    document.getElementById('pdfModal').style.display = 'block';
+    const modal = document.getElementById('pdfModal');
+    const iframe = document.getElementById('pdfIframe');
+
+    if (modal && iframe) {
+        // Append parameters to hide toolbar and navigation panes
+        const cleanPath = `${pdfPath}#toolbar=0&navpanes=0`;
+        iframe.src = cleanPath; // Set the source of the iframe
+        modal.style.display = 'block'; // Show the modal
+
+        // Optional: Adjust height dynamically based on content
+        iframe.onload = function() {
+            try {
+                // This will only work if the PDF is from the same origin
+                const pdfHeight = iframe.contentWindow.document.body.scrollHeight;
+                iframe.style.height = pdfHeight + 'px';
+            } catch (e) {
+                console.log('Height adjustment not possible due to cross-origin restrictions');
+                // Fallback height
+                iframe.style.height = '800px'; // Set a reasonable fallback height
+            }
+        };
+    } else {
+        console.error("Modal or iframe not found");
+    }
 }
 
 // Function to close the modal
