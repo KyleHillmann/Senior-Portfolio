@@ -60,33 +60,41 @@ const observer = new IntersectionObserver(entries => {
 sections.forEach(section => observer.observe(section));
 
 // PDF Modal Functions
-function openModal(pdfPath) {
+async function openModal(pdfPath) {  // Ensure async is here
     const modal = document.getElementById('pdfModal');
-    const iframe = document.getElementById('pdfIframe');
+    const canvas = document.getElementById('pdfCanvas');
+    const context = canvas.getContext('2d');
+
+    if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+    }
 
     console.log('Opening PDF:', pdfPath);
-    iframe.src = `${pdfPath}#toolbar=0&navpanes=0`;
     modal.style.display = 'block';
-    iframe.style.height = '80vh'; // Fixed height
-}
+
     try {
         // Load the PDF
         const loadingTask = pdfjsLib.getDocument(pdfPath);
         const pdf = await loadingTask.promise;
         console.log('PDF loaded successfully, pages:', pdf.numPages);
 
-        // Calculate total height based on page dimensions
+        // Calculate total height and width based on page dimensions
         let totalHeight = 0;
-        const scale = 1.5; // Adjust scale for resolution
+        let maxWidth = 0; // New variable for maximum width
+        const scale = 4.0; // Increased scale for better quality
+
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
             const viewport = page.getViewport({ scale });
             totalHeight += viewport.height;
+            maxWidth = Math.max(maxWidth, viewport.width); // Update maxWidth
         }
         console.log('Total PDF height:', totalHeight);
+        console.log('Maximum PDF width:', maxWidth); // Log the maximum width
 
         // Set canvas dimensions
-        canvas.width = 800; // Fixed width, adjust as needed
+        canvas.width = maxWidth; // Set width to maximum width
         canvas.height = totalHeight;
         canvas.style.width = '100%'; // Responsive width
         canvas.style.height = `${totalHeight}px`;
@@ -108,8 +116,8 @@ function openModal(pdfPath) {
                 viewport: viewport
             };
             await page.render(renderContext).promise;
-            context.translate(0, viewport.height); // Move to next page position
             currentHeight += viewport.height;
+            context.translate(0, viewport.height); // Move to next page position
         }
         console.log('Rendered PDF with height:', totalHeight);
     } catch (e) {
@@ -128,5 +136,6 @@ function closeModal() {
         canvas.width = 0; // Clear canvas
         canvas.height = 0;
         canvas.style.height = '';
+        canvas.style.width = '';
     }
 }
