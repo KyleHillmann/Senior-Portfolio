@@ -82,7 +82,7 @@ async function openModal(pdfPath) {  // Ensure async is here
         // Calculate total height and width based on page dimensions
         let totalHeight = 0;
         let maxWidth = 0; // New variable for maximum width
-        const scale = 4.0; // Increased scale for better quality
+        const scale = 2.0; // Adjust this value to scale up the PDF
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
@@ -95,16 +95,31 @@ async function openModal(pdfPath) {  // Ensure async is here
 
         // Set canvas dimensions
         canvas.width = maxWidth; // Set width to maximum width
-        canvas.height = totalHeight;
+        canvas.height = totalHeight; // Set height to total height
         canvas.style.width = '100%'; // Responsive width
         canvas.style.height = `${totalHeight}px`;
 
         // Cap the modal height
-        const maxHeight = window.innerHeight * 0.9;
+        const maxHeight = window.innerHeight * 0.85; // Adjusted for larger height
+        const aspectRatio = maxWidth / totalHeight; // Calculate aspect ratio
+
         if (totalHeight > maxHeight) {
+            const adjustedWidth = maxHeight * aspectRatio; // Maintain aspect ratio
             canvas.style.height = `${maxHeight}px`;
-            modal.style.overflowY = 'auto';
+            canvas.style.width = `${adjustedWidth}px`; // Set width based on aspect ratio
+            modal.style.overflow = 'visible';
+        } else {
+            canvas.style.height = `${totalHeight}px`;
+            canvas.style.width = '100%'; // Responsive width
         }
+
+        // New code to control canvas size
+        const scaleFactor = 1.9; // Adjust this value to control the size of the canvas
+        const scaledHeight = parseFloat(canvas.style.height) * scaleFactor;
+        const scaledWidth = scaledHeight * aspectRatio; // Calculate width based on scaled height
+
+        canvas.style.height = `${scaledHeight}px`;
+        canvas.style.width = `${scaledWidth}px`;
 
         // Render all pages
         let currentHeight = 0;

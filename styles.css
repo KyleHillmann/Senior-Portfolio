@@ -412,7 +412,7 @@ button:hover { background-color: #27ae60; }
     max-width: 800px;
     max-height: 90vh;
     background-color: rgba(0, 0, 0, 0.8);
-    overflow-y: auto; /* Allow scrolling for long PDFs */
+    overflow-y: visible; /* Allow scrolling for long PDFs */
 }
 
 .modal-content {
@@ -426,12 +426,18 @@ button:hover { background-color: #27ae60; }
 }
 
 .pdf-container {
-    width: 100%;
-    overflow: hidden; /* Prevent horizontal overflow */
+    width: 100%; /* Ensure it takes the full width */
+    height: auto; /* Allow height to adjust based on content */
+    overflow: visible; /* Prevent overflow */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the canvas horizontally */
+    align-items: center; /* Center the canvas vertically */
 }
 
 #pdfCanvas {
-    width: 100%;
+    width: 100%; /* Set to 100% for responsive scaling */
+    height: auto; /* Allow height to adjust based on content */
+    max-width: 120%; /* Scale up to 120% of its original size */
     display: block;
 }
 
