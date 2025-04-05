@@ -33,6 +33,11 @@ document.addEventListener('click', function (event) {
     }
 });
 
+// --- Function to resize iframe based on content ---
+function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+}
+
 // --- Modal Background Click to Close ---
 document.getElementById('pdfModal').addEventListener('click', function(event) {
     if (event.target === this) {

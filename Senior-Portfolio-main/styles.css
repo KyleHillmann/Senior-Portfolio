@@ -16,7 +16,7 @@ body {
     scroll-behavior: smooth;
     line-height: 1.6;
     padding: 0 1rem; /* Add padding to the body for better spacing */
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    overflow-x: visible; /* Prevent horizontal overflow */
 }
 
 /* --- Animations --- */
@@ -67,7 +67,7 @@ body {
     padding: 3rem 1rem; /* Increase padding for header */
     text-align: center;
     background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95));
-    overflow: hidden; /* Prevent overflow in header */
+    overflow: visible; /* Prevent overflow in header */
 }
 
 .header-content { max-width: 800px; margin: 0 auto; }
@@ -119,7 +119,7 @@ body {
     background-color: var(--primary);
     z-index: 998;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    overflow: hidden; /* Prevent overflow in navbar */
+    overflow: visible; /* Prevent overflow in navbar */
 }
 
 .nav-list {
@@ -675,12 +675,14 @@ button:hover { background-color: #27ae60; }
 /* Modal Styles */
 .modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
+    position: fixed; /* Change to fixed to center it properly */
     z-index: 1000; /* Sit on top */
-    left: 0; /* Ensure it covers the left side */
-    top: 0; /* Ensure it covers the top */
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to center */
+    width: 90vw; /* Full width of viewport with some margin */
+    max-width: 800px; /* Optional: set a max width */
+    height: 120vh; /* Adjust height automatically */
     background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
     overflow: visible; /* Prevent overflow in modal */
 }
@@ -688,7 +690,7 @@ button:hover { background-color: #27ae60; }
 .modal-content {
     display: block;
     width: 100%; /* Full width of modal */
-    height: 100%; /* Full height of modal */
+    height: auto; /* Adjust height automatically */
     background-color: #fefefe;
     border: none;
     padding: 0;
@@ -698,7 +700,7 @@ button:hover { background-color: #27ae60; }
 
 #pdfIframe {
     width: 100vw; /* Full width of modal */
-    height: 100vh; /* Full height of modal */
+    height: 120vh; /* Full height of modal */
     border: none; /* Remove border */
     display: block; /* Ensure it behaves as a block element */
 }
