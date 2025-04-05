@@ -1,44 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Kyle Hillmann - Senior Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body.iframe-mode .navbar,
-        body.iframe-mode .hidden-print {
-            display: none;
-        }
-    </style>
-    <script language="javascript" type="text/javascript">
-        function resizeIframe(obj) {
-            // Use a timeout to allow the PDF to load before measuring its height
-            setTimeout(() => {
-                const body = obj.contentWindow.document.body;
-                if (body) {
-                    obj.style.height = body.scrollHeight + 'px';
-                } else {
-                    console.error("Body not found in iframe");
-                }
-            }, 500); // Adjust the timeout duration as needed
-        }
-
-        // Function to open the modal and set the iframe source
-        function openModal(pdfPath) {
-            const modal = document.getElementById('pdfModal');
-            const iframe = document.getElementById('pdfIframe');
-
-            if (modal && iframe) {
-                iframe.src = pdfPath; // Set the source of the iframe
-                modal.style.display = 'block'; // Show the modal
-            } else {
-                console.error("Modal or iframe not found");
-            }
-        }
-    </script>
 </head>
 <body class="iframe-mode">
     <div class="progress-container">
@@ -71,30 +40,22 @@
             <div class="personal-grid">
                 <div class="card card-personal-narrative">
                     <h3>Personal Narrative</h3>
-                    <p>I'm passionate about technology—whether it's repairing electronics, building computers, or coding. My curiosity first sparked at the age of 13, binge-watching YouTube creators like Linus Tech Tips dissect gaming rigs and tech innovations. By 16, I talked my dad into buying an old desktop—tinkering with upgrades, troubleshooting parts, and finally getting it to run games smoothly became my obsession. That old machine opened my eyes to how hands-on experimentation turns ideas into solutions. Today, that same drive led me to transform an aging computer into a home network managing our family's VPN and NAS—proof that old tech always has new stories to tell.</p>
+                    <p>I'm passionate about technology—whether it's repairing electronics, building computers, or coding...</p>
                 </div>
                 <div class="card card-goals">
                     <h3>Goals</h3>
                     <p>
                         <span aria-hidden="true">☑</span> <span class="sr-only">Completed:</span> Enroll at UW-Stout (Electrical Engineering)<br>
-                        <span aria-hidden="true">☑</span> <span class="sr-only">Completed:</span> 100+ volunteer hours (Current: 112)<br>
+                        <span aria-hidden="true">☑</span> <span class="sr-only">Completed:</span> 100+ volunteer hours (Current: 112)
                     </p>
                 </div>
                 <div class="card card-activities">
                     <h3>Activities</h3>
-                    <p>
-                        Yearbook Club<br>
-                        Track and Field<br>
-                        Key Club
-                    </p>
+                    <p>Yearbook Club<br>Track and Field<br>Key Club</p>
                 </div>
                 <div class="card card-community">
                     <h3>Community Service</h3>
-                    <p>
-                        Key Club Member (2021-2023)<br>
-                        Benjamines House (86 hours)<br>
-                        Toys for Tots (26 hours)
-                    </p>
+                    <p>Key Club Member (2021-2023)<br>Benjamines House (86 hours)<br>Toys for Tots (26 hours)</p>
                 </div>
                 <div class="reflection">
                     <p>Reflection: Need to improve time management and balance between academic and extracurricular activities.</p>
@@ -113,16 +74,16 @@
                     <h3>Work Samples</h3>
                     <div class="work-sample-item">
                         <span>1. Repaired and Improved a GPU</span>
-                        <button data-target="imageContainer1" aria-label="View Renewable Energy Research Paper">View</button>
+                        <button data-target="imageContainer1" aria-label="View GPU Repair">View</button>
                         <div class="image-container" id="imageContainer1">
-                            <img src="unnamed.jpg" alt="Preview of Renewable Energy Research Paper">
+                            <img src="unnamed.jpg" alt="Preview of GPU Repair">
                         </div>
                     </div>
                     <div class="work-sample-item">
                         <span>2. Robotics Competition Code</span>
-                        <button data-target="imageContainer2" aria-label="View Robotics Competition Code">View</button>
+                        <button data-target="imageContainer2" aria-label="View Robotics Code">View</button>
                         <div class="image-container" id="imageContainer2">
-                            <img src="image.png" alt="Preview of Robotics Competition Code">
+                            <img src="image.png" alt="Preview of Robotics Code">
                         </div>
                     </div>
                 </div>
@@ -137,52 +98,44 @@
             <div class="grid-2col">
                 <div class="card">
                     <h3>Career Exploration</h3>
-                    <p>
-                        Environmental Engineer (Primary)<br>
-                        • Job shadowed at EcoTech Solutions<br>
-                        • Researched BS in Environmental Engineering<br>
-                        • Developed a 5-year career plan
-                    </p>
+                    <p>Environmental Engineer (Primary)<br>• Job shadowed at EcoTech Solutions<br>• Researched BS in Environmental Engineering<br>• Developed a 5-year career plan</p>
                 </div>
                 <div class="card">
                     <h3>Portfolio Requirements</h3>
                     <p>
                         <span aria-hidden="true">✓</span> <span class="sr-only">Completed:</span> Resume: Highlighting On Computer Skills<br>
-                        <span aria-hidden="true">☒</span>  Cover Letter: No Completed Cover Letter<br>
+                        <span aria-hidden="true">☒</span> <span class="sr-only">Completed:</span> Cover Letter: No Completed Cover Letter<br>
                         <span aria-hidden="true">✓</span> <span class="sr-only">Completed:</span> References: 3 Professional Contacts<br>
-                        <span aria-hidden="true">☒</span> <span class="sr-only">Completed:</span> Recommendation Letters: No Current Letters Of Recommendations
+                        <span aria-hidden="true">☒</span> <span class="sr-only">Completed:</span> Recommendation Letters: No Current Letters
                     </p>
                 </div>
             </div>
 
-            <!-- Moved Document Section Content Here -->
             <div class="card full-width">
                 <h3>Documents</h3>
                 <div class="grid-2col">
                     <div class="document-container">
                         <h4>Cover Letter</h4>
-                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Resume</h4>
-                        <button onclick="openModal('Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillmann - Resume.pdf')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 1</h4>
-                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 2</h4>
-                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation 2.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation 2.pdf')" class="fullscreen-button">Open PDF</button>
                     </div>
                 </div>
             </div>
-            <!-- End of Moved Content -->
 
-            <!-- Modal Structure -->
             <div id="pdfModal" class="modal">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
+                    <span class="close" onclick="closeModal()">×</span>
                     <div class="pdf-container">
                         <iframe id="pdfIframe" src="" name="viewCategory"></iframe>
                     </div>
@@ -191,25 +144,15 @@
         </section>
 
         <section class="content-section active" id="strengths">
-            <h2 class="section-header">Strengths &amp; Interests</h2>
+            <h2 class="section-header">Strengths & Interests</h2>
             <div class="grid-2col">
                 <div class="card">
                     <h3>Technical Skills</h3>
-                    <p>
-                        HTML Programming<br>
-                        CAD Design<br>
-                        Computer Skills<br>
-                        Technical Writing
-                    </p>
+                    <p>HTML Programming<br>CAD Design<br>Computer Skills<br>Technical Writing</p>
                 </div>
                 <div class="card">
                     <h3>Five-Year Plan</h3>
-                    <p>
-                        Bachelor of Science in Electrical Engineering<br>
-                        Electrical Engineering Internship<br>
-                        Leadership in Engineering Organizations<br>
-                        Advanced Prototype Development
-                    </p>
+                    <p>Bachelor of Science in Electrical Engineering<br>Electrical Engineering Internship<br>Leadership in Engineering Organizations<br>Advanced Prototype Development</p>
                 </div>
             </div>
         </section>
@@ -219,17 +162,11 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <h3>Academic Growth</h3>
-                    <p>
-                        2019: 3.2 GPA <span aria-hidden="true">→</span><span class="sr-only">increased to</span> 2023: 3.6 GPA<br>
-                        Key Achievement: Exhausting Math Curriculum
-                    </p>
+                    <p>2019: 3.2 GPA <span aria-hidden="true">→</span><span class="sr-only">increased to</span> 2023: 3.6 GPA<br>Key Achievement: Exhausting Math Curriculum</p>
                 </div>
                 <div class="timeline-item">
                     <h3>Leadership Development</h3>
-                    <p>
-                        2021: Club Member <span aria-hidden="true">→</span><span class="sr-only">promoted to</span> 2023: President of 3 Organizations<br>
-                        Created the school's first sustainability task force
-                    </p>
+                    <p>2021: Club Member <span aria-hidden="true">→</span><span class="sr-only">promoted to</span> 2023: President of 3 Organizations<br>Created the school's first sustainability task force</p>
                 </div>
             </div>
         </section>
@@ -240,5 +177,5 @@
     </footer>
 
     <script src="scripts.js"></script>
-
-</body></html>
+</body>
+</html>

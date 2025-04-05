@@ -1,5 +1,5 @@
-// --- Event Delegation for Image Modals ---
-document.addEventListener('click', function (event) {
+// Event Delegation for Image Modals
+document.addEventListener('click', function(event) {
     if (event.target.matches('.work-sample-item button')) {
         const button = event.target;
         const containerId = button.dataset.target;
@@ -25,83 +25,77 @@ document.addEventListener('click', function (event) {
             container.style.pointerEvents = 'auto';
         } else {
             const closeButton = container.querySelector('.close-button');
-            if (closeButton) {
-                closeButton.remove();
-            }
+            if (closeButton) closeButton.remove();
             document.body.style.pointerEvents = '';
         }
     }
 });
 
-// --- Modal Background Click to Close ---
+// Modal Background Click to Close
 document.getElementById('pdfModal').addEventListener('click', function(event) {
-    if (event.target === this) {
-        closeModal();
-    }
+    if (event.target === this) closeModal();
 });
 
-// --- Progress Bar ---
+// Progress Bar
 function updateProgressBar() {
     const scrollPosition = window.scrollY || window.pageYOffset;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollPosition / totalHeight) * 100;
     const progressBar = document.querySelector('.progress-bar');
-    if (progressBar) {
-        progressBar.style.width = `${progress}%`;
-    }
+    if (progressBar) progressBar.style.width = `${progress}%`;
 }
 
 window.addEventListener('scroll', updateProgressBar);
 window.addEventListener('load', updateProgressBar);
 window.addEventListener('resize', updateProgressBar);
 
-// --- Section Visibility on Scroll (Intersection Observer) ---
+// Section Visibility
 const sections = document.querySelectorAll('.content-section');
-
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('active');
     });
-}, {
-    threshold: 0.1
-});
+}, { threshold: 0.1 });
 
-sections.forEach(section => {
-    observer.observe(section);
-});
+sections.forEach(section => observer.observe(section));
 
-// Function to open the modal and set the iframe source
+// PDF Modal Functions
 function openModal(pdfPath) {
     const modal = document.getElementById('pdfModal');
     const iframe = document.getElementById('pdfIframe');
 
-    if (modal && iframe) {
-        // Append parameters to hide toolbar and navigation panes
-        const cleanPath = `${pdfPath}#toolbar=0&navpanes=0`;
-        iframe.src = cleanPath; // Set the source of the iframe
-        modal.style.display = 'block'; // Show the modal
+    console.log('Opening PDF:', pdfPath);
+    iframe.src = `${pdfPath}#toolbar=0&navpanes=0`;
+    modal.style.display = 'block';
 
-        // Optional: Adjust height dynamically based on content
-        iframe.onload = function() {
-            try {
-                // This will only work if the PDF is from the same origin
-                const pdfHeight = iframe.contentWindow.document.body.scrollHeight;
-                iframe.style.height = pdfHeight + 'px';
-            } catch (e) {
-                console.log('Height adjustment not possible due to cross-origin restrictions');
-                // Fallback height
-                iframe.style.height = '800px'; // Set a reasonable fallback height
+    iframe.onload = function() {
+        console.log('PDF iframe loaded successfully');
+        try {
+            const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+            console.log('PDF content height:', contentHeight);
+            if (contentHeight && contentHeight > 0) {
+                // Cap the height at 90vh to avoid overflowing the modal
+                const maxHeight = window.innerHeight * 0.9;
+                iframe.style.height = `${Math.min(contentHeight, maxHeight)}px`;
+                console.log('Set iframe height to:', iframe.style.height);
+            } else {
+                console.log('Invalid height detected, using fallback');
+                iframe.style.height = '80vh';
             }
-        };
-    } else {
-        console.error("Modal or iframe not found");
-    }
+        } catch (e) {
+            console.error('Height adjustment failed:', e.message);
+            iframe.style.height = '80vh';
+        }
+    };
+
+    // Initial height in case onload doesn't fire immediately
+    iframe.style.height = '80vh';
 }
 
-// Function to close the modal
 function closeModal() {
-    document.getElementById('pdfModal').style.display = 'none';
-    document.getElementById('pdfIframe').src = ''; // Clear the iframe source
+    const modal = document.getElementById('pdfModal');
+    const iframe = document.getElementById('pdfIframe');
+    modal.style.display = 'none';
+    iframe.src = '';
+    iframe.style.height = '';
 }
