@@ -7,8 +7,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body.iframe-mode .navbar,
+        body.iframe-mode .hidden-print {
+            display: none;
+        }
+    </style>
 </head>
-<body>
+<body class="iframe-mode">
     <div class="progress-container">
         <div class="progress-bar" style="width: 100%;"></div>
     </div>
@@ -83,14 +89,14 @@
                         <span>1. Repaired and Imporved a GPU</span>
                         <button data-target="imageContainer1" aria-label="View Renewable Energy Research Paper">View</button>
                         <div class="image-container" id="imageContainer1">
-                            <img src="D:\Code\Senior-Portfolio\Senior-Portfolio-main\unnamed.jpg" alt="Preview of Renewable Energy Research Paper">
+                            <img src="unnamed.jpg" alt="Preview of Renewable Energy Research Paper">
                         </div>
                     </div>
                     <div class="work-sample-item">
                         <span>2. Robotics Competition Code</span>
                         <button data-target="imageContainer2" aria-label="View Robotics Competition Code">View</button>
                         <div class="image-container" id="imageContainer2">
-                            <img src="D:\Code\Senior-Portfolio\Senior-Portfolio-main\image.png" alt="Preview of Robotics Competition Code">
+                            <img src="image.png" alt="Preview of Robotics Competition Code">
                         </div>
                     </div>
                 </div>
@@ -129,19 +135,19 @@
                 <div class="grid-2col">
                     <div class="document-container">
                         <h4>Cover Letter</h4>
-                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Resume</h4>
-                        <button onclick="openModal('https://kylehillmann.run.place/resume#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('D:/Code/Senior-Portfolio/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 1</h4>
-                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                     <div class="document-container">
                         <h4>Letter of Recommendation 2</h4>
-                        <button onclick="openModal('D:/Code/Senior-Portfolio/Senior-Portfolio-main/Kyle Hillmann - Resume.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
+                        <button onclick="openModal('Kyle Hillman - Letter of Recommendation.pdf#toolbar=0&amp;navpanes=0')" class="fullscreen-button">Open PDF</button>
                     </div>
                 </div>
             </div>
