@@ -16,7 +16,10 @@ body {
     scroll-behavior: smooth;
     line-height: 1.6;
     padding: 0 1rem;
-    overflow-x: visible;
+    overflow-x: hidden;
+}
+.iframe-mode::-webkit-scrollbar {
+    display: none;
 }
 
 @keyframes fadeIn {
@@ -66,7 +69,7 @@ body {
     padding: 3rem 1rem;
     text-align: center;
     background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95));
-    overflow: visible;
+    overflow: hidden;
 }
 
 .header-content { max-width: 800px; margin: 0 auto; }
@@ -412,7 +415,7 @@ button:hover { background-color: #27ae60; }
     max-width: 800px;
     max-height: 90vh;
     background-color: rgba(0, 0, 0, 0.8);
-    overflow-y: visible; /* Allow scrolling for long PDFs */
+    overflow-y: hidden; /* Allow scrolling for long PDFs */
 }
 
 .modal-content {
@@ -426,10 +429,11 @@ button:hover { background-color: #27ae60; }
 }
 
 .pdf-container {
+    position: fixed;
     width: 100%; /* Ensure it takes the full width */
     height: auto; /* Allow height to adjust based on content */
     overflow: visible; /* Prevent overflow */
-    display: flex; /* Use flexbox for alignment */
+    display: none; /* Use flexbox for alignment */
     justify-content: center; /* Center the canvas horizontally */
     align-items: center; /* Center the canvas vertically */
 }
@@ -443,7 +447,7 @@ button:hover { background-color: #27ae60; }
 
 .close {
     color: #aaa;
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 20px;
     font-size: 28px;
@@ -455,4 +459,45 @@ button:hover { background-color: #27ae60; }
 .close:focus {
     color: black;
     text-decoration: none;
+}
+
+#pdfContainer {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    padding: 20px;
+    max-height: 80vh; /* Maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 90vw; /* Responsive width */
+    max-width: 1000px; /* Maximum width */
+    border-radius: var(--border-radius);
+}
+
+#pdfContainer canvas {
+    width: 100% !important; /* Override inline styles */
+    height: auto !important; /* Ensure height adjusts */
+    display: block;
+}
+
+#pdfContainer .close-button {
+    position: sticky; /* Stays at top while scrolling */
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s ease;
+}
+
+#pdfContainer .close-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
 }
