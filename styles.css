@@ -1,503 +1,150 @@
-:root {
-    --primary: #121212;
-    --secondary: #1f1f1f;
-    --accent: #34d399;
-    --text: #f5f5f5;
-    --text-secondary: #a0a0a0;
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    --border-radius: 6px;
+// Event Delegation for Image Modals (unchanged)
+document.addEventListener('click', function(event) {
+    if (event.target.matches('.work-sample-item button')) {
+        const button = event.target;
+        const containerId = button.dataset.target;
+        const container = document.getElementById(containerId);
+
+        if (!container) return;
+
+        container.classList.toggle('expanded');
+
+        if (container.classList.contains('expanded')) {
+            const closeButton = document.createElement('button');
+            closeButton.classList.add('close-button');
+            closeButton.textContent = 'X';
+            closeButton.setAttribute('aria-label', 'Close Image');
+            closeButton.addEventListener('click', (closeEvent) => {
+                closeEvent.stopPropagation();
+                container.classList.remove('expanded');
+                closeButton.remove();
+                document.body.style.pointerEvents = '';
+            });
+            container.appendChild(closeButton);
+            document.body.style.pointerEvents = 'none';
+            container.style.pointerEvents = 'auto';
+        } else {
+            const closeButton = container.querySelector('.close-button');
+            if (closeButton) closeButton.remove();
+            document.body.style.pointerEvents = '';
+        }
+    }
+});
+
+// Progress Bar (unchanged)
+function updateProgressBar() {
+    const scrollPosition = window.scrollY || window.pageYOffset;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollPosition / totalHeight) * 100;
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) progressBar.style.width = `${progress}%`;
 }
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    color: var(--text);
-    background-color: var(--primary);
-    scroll-behavior: smooth;
-    line-height: 1.6;
-    padding: 0 1rem;
-    overflow-x: hidden;
-}
-.iframe-mode::-webkit-scrollbar {
-    display: none;
-}
+window.addEventListener('scroll', updateProgressBar);
+window.addEventListener('load', updateProgressBar);
+window.addEventListener('resize', updateProgressBar);
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+// Section Visibility (unchanged)
+const sections = document.querySelectorAll('.content-section');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, { threshold: 0.1 });
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+sections.forEach(section => observer.observe(section));
 
-@keyframes scaleUp {
-    from { transform: scale(0.95); }
-    to { transform: scale(1); }
-}
+// PDF Container Functions
+async function openPDFContainer(pdfPath) {
+    let pdfContainer = document.getElementById('pdfContainer');
+    
+    if (pdfContainer && pdfContainer.style.display === 'block') {
+        return; // Exit if already open
+    }
 
-.animate-fade { animation: fadeIn 0.8s var(--ease) forwards; }
-.animate-up { animation: fadeInUp 0.8s var(--ease) forwards; animation-delay: 0.2s; }
-.animate-scale { animation: scaleUp 0.8s var(--ease) forwards; }
+    if (!pdfContainer) {
+        pdfContainer = document.createElement('div');
+        pdfContainer.id = 'pdfContainer';
+        document.body.appendChild(pdfContainer);
+    } else {
+        pdfContainer.innerHTML = '';
+    }
 
-/* Progress Bar */
-.progress-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: var(--secondary);
-    z-index: 999;
-}
+    const canvas = document.createElement('canvas');
+    canvas.id = 'pdfCanvas';
+    pdfContainer.appendChild(canvas);
+    const context = canvas.getContext('2d');
 
-.progress-bar {
-    height: 100%;
-    background-color: var(--accent);
-    width: 0;
-    transition: width 0.3s var(--ease);
-}
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('close-button');
+    closeButton.textContent = 'X';
+    closeButton.setAttribute('aria-label', 'Close PDF');
+    closeButton.addEventListener('click', closePDFContainer);
+    pdfContainer.appendChild(closeButton);
 
-/* Header */
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 3rem 1rem;
-    text-align: center;
-    background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95));
-    overflow: hidden;
-}
+    pdfContainer.style.display = 'block';
 
-.header-content { max-width: 800px; margin: 0 auto; }
+    try {
+        const loadingTask = pdfjsLib.getDocument(pdfPath);
+        const pdf = await loadingTask.promise;
 
-.portrait-frame {
-    width: 250px;
-    height: 350px;
-    border-radius: var(--border-radius);
-    border: 3px solid var(--accent);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    margin-bottom: 2rem;
-    animation: scaleUp 0.8s var(--ease) forwards;
-    margin-left: auto;
-    margin-right: auto;
-}
+        let totalHeight = 0;
+        let maxWidth = 0;
+        const scale = 1.5; // Reduced scale for better readability
 
-.portrait-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+            totalHeight += viewport.height;
+            maxWidth = Math.max(maxWidth, viewport.width);
+        }
 
-.header h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    animation: fadeIn 0.8s var(--ease) forwards;
-}
+        // Set canvas dimensions to accommodate all pages
+        canvas.width = maxWidth;
+        canvas.height = totalHeight;
 
-.header p {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    animation: fadeIn 0.8s var(--ease) forwards;
-    animation-delay: 0.2s;
-}
+        // Style the container with a fixed height and scrolling
+        pdfContainer.style.position = 'fixed'; // Changed to fixed for better positioning
+        pdfContainer.style.zIndex = '1000';
+        pdfContainer.style.left = '50%';
+        pdfContainer.style.top = '50px';
+        pdfContainer.style.transform = 'translateX(-50%)';
+        pdfContainer.style.background = '#fff';
+        pdfContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+        pdfContainer.style.padding = '20px';
+        pdfContainer.style.maxHeight = '80vh'; // Limit height to 80% of viewport
+        pdfContainer.style.overflowY = 'auto'; // Enable vertical scrolling
+        pdfContainer.style.width = '90vw'; // Set a reasonable width
+        pdfContainer.style.maxWidth = '1000px'; // Maximum width
 
-/* Navigation */
-.navbar {
-    position: sticky;
-    top: 0;
-    width: 100vw;
-    left: 50%;
-    margin-left: -50vw;
-    padding: 0;
-    background-color: var(--primary);
-    z-index: 998;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        // Canvas styles
+        canvas.style.width = '100%'; // Full width of container
+        canvas.style.height = 'auto'; // Height adjusts to content
+
+        // Render all pages
+        let currentHeight = 0;
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+            currentHeight += viewport.height;
+            context.translate(0, viewport.height);
+        }
+    } catch (e) {
+        console.error('PDF loading/rendering failed:', e.message);
+        canvas.height = 600;
+        context.fillText('Error loading PDF', 10, 50);
+    }
 }
 
-.nav-list {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
-.nav-item a {
-    color: var(--text);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s var(--ease);
-    display: block;
-}
-
-.nav-item a:hover,
-.nav-item a:focus {
-    color: var(--accent);
-    outline: none;
-}
-
-/* Sections */
-.content-section {
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    opacity: 0;
-}
-
-.content-section.active {
-    opacity: 1;
-    animation: fadeIn 0.8s var(--ease) forwards;
-}
-
-.section-header {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--accent);
-    text-align: center;
-}
-
-/* Grid */
-.grid-2col {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
-    max-width: 100%;
-}
-
-.academic-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    grid-template-areas: "goals samples" "reflection reflection";
-}
-
-.academic-grid .card:nth-child(1) { grid-area: goals; }
-.academic-grid .card:nth-child(2) { grid-area: samples; }
-.academic-grid .reflection { grid-area: reflection; }
-
-.personal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 3rem;
-    grid-template-areas: "narrative narrative narrative" "goals activities community" "reflection reflection reflection";
-}
-
-.personal-grid .card:nth-child(1) { grid-area: narrative; }
-.personal-grid .card:nth-child(2) { grid-area: goals; }
-.personal-grid .card:nth-child(3) { grid-area: activities; }
-.personal-grid .card:nth-child(4) { grid-area: community; }
-.personal-grid .reflection { grid-area: reflection; }
-
-/* Cards */
-.card {
-    padding: 2rem;
-    background-color: var(--secondary);
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-    opacity: 0;
-    animation: fadeInUp 0.8s var(--ease) forwards;
-    min-height: 250px;
-    margin-bottom: 1.5rem;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
-}
-
-.card h3 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--accent);
-}
-
-/* Timeline */
-.timeline {
-    position: relative;
-    margin: 4rem 0;
-    padding-left: 2rem;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 3px;
-    background-color: var(--accent);
-}
-
-.timeline-item {
-    padding: 2rem;
-    margin-bottom: 2rem;
-    background-color: var(--secondary);
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    animation: fadeInUp 0.8s var(--ease) forwards;
-    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.timeline-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
-}
-
-.timeline-item:nth-child(1) { animation-delay: 0.1s; }
-.timeline-item:nth-child(2) { animation-delay: 0.2s; }
-
-/* Image Modal */
-.image-container {
-    position: relative;
-    width: 150px;
-    height: 100px;
-    border: 1px solid var(--accent);
-    cursor: pointer;
-    transition: transform 0.3s var(--ease);
-}
-
-.image-container:hover { transform: scale(1.05); }
-
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.image-container.expanded {
-    width: 80vw;
-    max-width: 800px;
-    height: auto;
-    max-height: 80vh;
-    display: flex;
-    align-items: flex-start;
-    z-index: 1000;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-}
-
-.image-container.expanded img { width: 100%; height: auto; }
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    z-index: 1001;
-    transition: background-color 0.3s ease;
-}
-
-.close-button:hover { background-color: rgba(0, 0, 0, 0.9); }
-
-/* Buttons */
-button {
-    background-color: var(--accent);
-    color: var(--primary);
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: var(--border-radius);
-    transition: background-color 0.3s var(--ease);
-}
-
-button:hover { background-color: #27ae60; }
-
-/* Work Sample Items */
-.work-sample-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.work-sample-item > * {
-    margin-right: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.work-sample-item span { flex-grow: 1; }
-
-/* Footer */
-.footer {
-    position: relative;
-    width: 100vw;
-    left: 50%;
-    margin-left: -50vw;
-    text-align: center;
-    background-color: var(--secondary);
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-/* Accessibility */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-/* Reflection */
-.reflection {
-    padding: 2rem;
-    background-color: var(--secondary);
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-    opacity: 0;
-    animation: fadeInUp 0.8s var(--ease) forwards;
-}
-
-.reflection:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
-}
-
-.document-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.fullscreen-button {
-    background-color: var(--accent);
-    color: var(--primary);
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: var(--border-radius);
-    transition: background-color 0.3s var(--ease);
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.fullscreen-button:hover { background-color: #27ae60; }
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90vw;
-    max-width: 800px;
-    max-height: 90vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    overflow-y: hidden; /* Allow scrolling for long PDFs */
-}
-
-.modal-content {
-    width: 100%;
-    background-color: #fefefe;
-    border: none;
-    padding: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    border-radius: var(--border-radius);
-    position: relative;
-}
-
-.pdf-container {
-    position: fixed;
-    width: 100%; /* Ensure it takes the full width */
-    height: auto; /* Allow height to adjust based on content */
-    overflow: visible; /* Prevent overflow */
-    display: none; /* Use flexbox for alignment */
-    justify-content: center; /* Center the canvas horizontally */
-    align-items: center; /* Center the canvas vertically */
-}
-
-#pdfCanvas {
-    width: 100%; /* Set to 100% for responsive scaling */
-    height: auto; /* Allow height to adjust based on content */
-    max-width: 120%; /* Scale up to 120% of its original size */
-    display: block;
-}
-
-.close {
-    color: #aaa;
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-}
-
-#pdfContainer {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1000;
-    left: 50%;
-    top: 50px;
-    transform: translateX(-50%);
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    padding: 20px;
-    max-height: 80vh; /* Maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    width: 90vw; /* Responsive width */
-    max-width: 1000px; /* Maximum width */
-    border-radius: var(--border-radius);
-}
-
-#pdfContainer canvas {
-    width: 100% !important; /* Override inline styles */
-    height: auto !important; /* Ensure height adjusts */
-    display: block;
-}
-
-#pdfContainer .close-button {
-    position: sticky; /* Stays at top while scrolling */
-    top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    z-index: 1001;
-    transition: background-color 0.3s ease;
-}
-
-#pdfContainer .close-button:hover {
-    background-color: rgba(0, 0, 0, 0.9);
+function closePDFContainer() {
+    const pdfContainer = document.getElementById('pdfContainer');
+    if (pdfContainer) {
+        pdfContainer.style.display = 'none';
+        pdfContainer.innerHTML = '';
+    }
 }
