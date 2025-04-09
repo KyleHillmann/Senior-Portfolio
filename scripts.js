@@ -1,4 +1,4 @@
-// Event Delegation for Image Modals
+// Event Delegation for Image Modals (unchanged)
 document.addEventListener('click', function(event) {
     if (event.target.matches('.work-sample-item button')) {
         const button = event.target;
@@ -31,12 +31,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Modal Background Click to Close
-document.getElementById('pdfModal').addEventListener('click', function(event) {
-    if (event.target === this) closeModal();
-});
-
-// Progress Bar
+// Progress Bar (unchanged)
 function updateProgressBar() {
     const scrollPosition = window.scrollY || window.pageYOffset;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -49,7 +44,7 @@ window.addEventListener('scroll', updateProgressBar);
 window.addEventListener('load', updateProgressBar);
 window.addEventListener('resize', updateProgressBar);
 
-// Section Visibility
+// Section Visibility (unchanged)
 const sections = document.querySelectorAll('.content-section');
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -59,67 +54,72 @@ const observer = new IntersectionObserver(entries => {
 
 sections.forEach(section => observer.observe(section));
 
-// PDF Modal Functions
-async function openModal(pdfPath) {  // Ensure async is here
-    const modal = document.getElementById('pdfModal');
-    const canvas = document.getElementById('pdfCanvas');
-    const context = canvas.getContext('2d');
-
-    if (!canvas) {
-        console.error('Canvas element not found');
-        return;
+// PDF Container Functions
+async function openPDFContainer(pdfPath) {
+    let pdfContainer = document.getElementById('pdfContainer');
+    
+    if (pdfContainer && pdfContainer.style.display === 'block') {
+        return; // Exit if already open
     }
 
-    console.log('Opening PDF:', pdfPath);
-    modal.style.display = 'block';
+    if (!pdfContainer) {
+        pdfContainer = document.createElement('div');
+        pdfContainer.id = 'pdfContainer';
+        document.body.appendChild(pdfContainer);
+    } else {
+        pdfContainer.innerHTML = '';
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'pdfCanvas';
+    pdfContainer.appendChild(canvas);
+    const context = canvas.getContext('2d');
+
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('close-button');
+    closeButton.textContent = 'X';
+    closeButton.setAttribute('aria-label', 'Close PDF');
+    closeButton.addEventListener('click', closePDFContainer);
+    pdfContainer.appendChild(closeButton);
+
+    pdfContainer.style.display = 'block';
 
     try {
-        // Load the PDF
         const loadingTask = pdfjsLib.getDocument(pdfPath);
         const pdf = await loadingTask.promise;
-        console.log('PDF loaded successfully, pages:', pdf.numPages);
 
-        // Calculate total height and width based on page dimensions
         let totalHeight = 0;
-        let maxWidth = 0; // New variable for maximum width
-        const scale = 2.0; // Adjust this value to scale up the PDF
+        let maxWidth = 0;
+        const scale = 1.5; // Reduced scale for better readability
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
             const viewport = page.getViewport({ scale });
             totalHeight += viewport.height;
-            maxWidth = Math.max(maxWidth, viewport.width); // Update maxWidth
-        }
-        console.log('Total PDF height:', totalHeight);
-        console.log('Maximum PDF width:', maxWidth); // Log the maximum width
-
-        // Set canvas dimensions
-        canvas.width = maxWidth; // Set width to maximum width
-        canvas.height = totalHeight; // Set height to total height
-        canvas.style.width = '100%'; // Responsive width
-        canvas.style.height = `${totalHeight}px`;
-
-        // Cap the modal height
-        const maxHeight = window.innerHeight * 0.85; // Adjusted for larger height
-        const aspectRatio = maxWidth / totalHeight; // Calculate aspect ratio
-
-        if (totalHeight > maxHeight) {
-            const adjustedWidth = maxHeight * aspectRatio; // Maintain aspect ratio
-            canvas.style.height = `${maxHeight}px`;
-            canvas.style.width = `${adjustedWidth}px`; // Set width based on aspect ratio
-            modal.style.overflow = 'visible';
-        } else {
-            canvas.style.height = `${totalHeight}px`;
-            canvas.style.width = '100%'; // Responsive width
+            maxWidth = Math.max(maxWidth, viewport.width);
         }
 
-        // New code to control canvas size
-        const scaleFactor = 1.9; // Adjust this value to control the size of the canvas
-        const scaledHeight = parseFloat(canvas.style.height) * scaleFactor;
-        const scaledWidth = scaledHeight * aspectRatio; // Calculate width based on scaled height
+        // Set canvas dimensions to accommodate all pages
+        canvas.width = maxWidth;
+        canvas.height = totalHeight;
 
-        canvas.style.height = `${scaledHeight}px`;
-        canvas.style.width = `${scaledWidth}px`;
+        // Style the container with a fixed height and scrolling
+        pdfContainer.style.position = 'fixed'; // Changed to fixed for better positioning
+        pdfContainer.style.zIndex = '1000';
+        pdfContainer.style.left = '50%';
+        pdfContainer.style.top = '50px';
+        pdfContainer.style.transform = 'translateX(-50%)';
+        pdfContainer.style.background = '#fff';
+        pdfContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+        pdfContainer.style.padding = '20px';
+        pdfContainer.style.maxHeight = '80vh'; // Limit height to 80% of viewport
+        pdfContainer.style.overflowY = 'auto'; // Enable vertical scrolling
+        pdfContainer.style.width = '90vw'; // Set a reasonable width
+        pdfContainer.style.maxWidth = '1000px'; // Maximum width
+
+        // Canvas styles
+        canvas.style.width = '100%'; // Full width of container
+        canvas.style.height = 'auto'; // Height adjusts to content
 
         // Render all pages
         let currentHeight = 0;
@@ -132,25 +132,19 @@ async function openModal(pdfPath) {  // Ensure async is here
             };
             await page.render(renderContext).promise;
             currentHeight += viewport.height;
-            context.translate(0, viewport.height); // Move to next page position
+            context.translate(0, viewport.height);
         }
-        console.log('Rendered PDF with height:', totalHeight);
     } catch (e) {
         console.error('PDF loading/rendering failed:', e.message);
-        canvas.height = 600; // Fallback height
-        canvas.style.height = '80vh';
+        canvas.height = 600;
         context.fillText('Error loading PDF', 10, 50);
     }
 }
 
-function closeModal() {
-    const modal = document.getElementById('pdfModal');
-    const canvas = document.getElementById('pdfCanvas');
-    modal.style.display = 'none';
-    if (canvas) {
-        canvas.width = 0; // Clear canvas
-        canvas.height = 0;
-        canvas.style.height = '';
-        canvas.style.width = '';
+function closePDFContainer() {
+    const pdfContainer = document.getElementById('pdfContainer');
+    if (pdfContainer) {
+        pdfContainer.style.display = 'none';
+        pdfContainer.innerHTML = '';
     }
 }
