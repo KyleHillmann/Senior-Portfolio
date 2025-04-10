@@ -115,7 +115,6 @@ body {
     width: 100vw;
     left: 50%;
     margin-left: -50vw;
-    padding: 0;
     background-color: var(--primary);
     z-index: 998;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -125,11 +124,9 @@ body {
     display: flex;
     justify-content: center;
     list-style: none;
-    padding: 0;
     margin: 0;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
 }
 
 .nav-item a {
@@ -500,4 +497,405 @@ button:hover { background-color: #27ae60; }
 
 #pdfContainer .close-button:hover {
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* ---- Resume-Specific Styles ---- */
+.resume-container {
+    max-width: 900px; /* Narrower to match the screenshot */
+    margin: 1rem auto;
+    padding: 1rem;
+    background-color: var(--primary); /* No card-like background to match screenshot */
+    animation: fadeIn 0.8s var(--ease) forwards;
+}
+
+.resume-header {
+    position: relative; /* Allow absolute positioning of the profile picture */
+    margin-bottom: 1rem;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column; /* Stack the text elements vertically */
+    width: 100%; /* Ensure header-text spans the full width of the container */
+    text-align: left; /* Align text to the left by default */
+}
+
+.resume-header h1 {
+    font-size: 2rem; /* Smaller to match screenshot */
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+    align-self: flex-start; /* Keep the name left-aligned */
+}
+
+.resume-header .first-name { color: var(--text); }
+.resume-header .last-name { color: var(--text-secondary); }
+
+.resume-header .title {
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0.25rem 0;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid var(--accent); /* Green underline to match screenshot */
+    display: inline-block;
+    align-self: flex-start; /* Keep the title left-aligned */
+}
+
+.resume-header .contact-info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.8rem;
+    text-align: center; /* Center the contact info text */
+    width: 100%; /* Ensure it spans the full width of the header-text */
+    align-self: center; /* Center the contact info block within the flex container */
+}
+
+.profile-picture-container {
+    position: absolute; /* Position the picture absolutely within resume-header */
+    top: 0;
+    right: 0; /* Place it in the top-right corner */
+}
+
+.profile-picture {
+    width: 100px; /* Smaller size for the top-right image */
+    height: 100px;
+    border-radius: 50%; /* Make the image circular */
+    border: 2px solid var(--accent); /* Green border to match the theme */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    object-fit: cover; /* Ensure the image fits well */
+    animation: scaleUp 0.8s var(--ease) forwards;
+}
+.title-container {
+    display: flex;
+    align-items: center; /* Vertically center the title and line */
+    position: relative; /* For positioning the line */
+    margin: 0.25rem 0;
+}
+
+.resume-header .title {
+    font-size: 1rem;
+    color: var(--primary); /* Black text for contrast inside the green box */
+    background-color: var(--accent); /* Green background for the box */
+    padding: 0.25rem 0.5rem; /* Padding inside the box */
+    border-radius: var(--border-radius); /* Rounded corners */
+    margin: 0; /* Remove default margin */
+    border-bottom: none; /* Remove the previous underline */
+    display: inline-block;
+}
+
+.title-line {
+    height: 2px; /* Thickness of the line */
+    background-color: var(--accent); /* Green line */
+    flex-grow: 1; /* Extend the line to fill the remaining space */
+}
+
+/* Adjust the profile picture alignment */
+.profile-picture-container {
+    position: absolute;
+    top: 60%; /* Center vertically relative to the resume-header */
+    right: 0;
+    transform: translateY(-50%); /* Adjust for vertical centering */
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+    animation: scaleUp 0.8s var(--ease) forwards;
+}
+
+/* Ensure the header-text doesn't overlap with the profile picture */
+.header-text {
+    padding-right: 120px; /* Space for the profile picture */
+}
+
+/* Adjust for print to match the screenshot */
+@media print {
+    .resume-header .title {
+        color: var(--primary); /* Black text in print */
+        background-color: var(--accent); /* Green background */
+        border-bottom: none;
+    }
+    .title-line {
+        background-color: var(--accent); /* Green line in print */
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .title-container {
+        flex-direction: column; /* Stack title and line on small screens */
+        align-items: flex-start; /* Align to the left */
+    }
+
+    .title-line {
+        width: 100%; /* Full width on small screens */
+        margin-left: 0;
+        margin-top: 0.25rem; /* Space below the title */
+    }
+
+    .header-text {
+        padding-right: 0; /* Remove padding on small screens */
+    }
+
+    .profile-picture-container {
+        position: static; /* Remove absolute positioning */
+        margin-top: 1rem;
+        transform: none; /* Remove transform */
+    }
+}
+
+.resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Fixed two-column layout to match screenshot */
+    gap: 1.5rem;
+}
+
+.left-column {
+    padding: 1rem;
+    background-color: var(--accent); /* Green background for left column */
+    border-radius: var(--border-radius);
+}
+
+.right-column {
+    padding: 0;
+}
+
+section h2 {
+    font-size: 1.25rem; /* Smaller to match screenshot */
+    font-weight: 600;
+    color: var(--primary); /* Black for contrast on green background in left column */
+    margin: 1rem 0 0.5rem;
+    text-transform: uppercase; /* Match screenshot */
+}
+
+.left-column section h2 {
+    color: var(--primary); /* Ensure contrast on green background */
+}
+
+.right-column section h2 {
+    color: var(--accent); /* Green for right column */
+}
+
+section p,
+section ul {
+    font-size: 0.9rem; /* Smaller to match screenshot */
+    color: var(--text);
+    margin: 0 0 0.5rem;
+}
+
+.left-column section p,
+.left-column section ul {
+    color: var(--primary); /* Black for contrast on green background */
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+}
+
+section ul li {
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+section ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+}
+
+.left-column section ul li::before {
+    color: var(--primary); /* Black bullets on green background */
+}
+
+.right-column section ul li::before {
+    color: var(--accent); /* Green bullets on black background */
+}
+
+.work-item h3 {
+    font-size: 1rem; /* Smaller to match screenshot */
+    font-weight: 600;
+    color: var(--text);
+    margin: 0.5rem 0 0.25rem;
+}
+
+.work-item .workplace {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    font-style: italic; /* Match screenshot */
+}
+
+.references {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.reference-item {
+    width: 45%;
+    padding: 1rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 0.85rem;
+    animation: fadeInUp 0.8s var(--ease) forwards;
+}
+
+.reference-item h3 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+
+.reference-item p {
+    color: var(--text-secondary);
+    margin: 0.25rem 0;
+}
+
+.reference-item p:last-child {
+    font-style: italic;
+    color: var(--text);
+}
+
+.right-column section div[style*="color: #cccccc"] {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* Print and Fullscreen Adjustments for Resume */
+@media print {
+    .hidden-print,
+    .navbar,
+    .footer {
+        display: none;
+    }
+
+    body {
+        background-color: #000; /* Match screenshot background */
+        color: #fff;
+        padding: 0;
+    }
+
+    .resume-container {
+        background-color: #000;
+        padding: 0.5rem;
+        margin: 0;
+    }
+
+    .left-column {
+        background-color: var(--accent);
+    }
+
+    .resume-header h1,
+    .resume-header .first-name,
+    .resume-header .last-name,
+    section h2,
+    .work-item h3,
+    section p,
+    section ul li {
+        color: #fff;
+    }
+
+    .left-column section h2,
+    .left-column section p,
+    .left-column section ul li {
+        color: var(--primary); /* Black for contrast on green background */
+    }
+
+    .resume-header .title {
+        color: var(--accent);
+        border-bottom: 2px solid var(--accent);
+    }
+
+    .resume-header .contact-info {
+        color: var(--text-secondary);
+        text-align: center; /* Ensure centered in print */
+    }
+
+    section h2 {
+        border-bottom: none;
+    }
+
+    section ul li::before {
+        color: var(--accent);
+    }
+
+    .left-column section ul li::before {
+        color: var(--primary);
+    }
+
+    .references {
+        display: none;
+    }
+
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+        border: 2px solid var(--accent);
+    }
+}
+
+@media (display-mode: fullscreen) {
+    .navbar,
+    .hidden-print,
+    .footer {
+        display: none;
+    }
+}
+
+/* Responsive Adjustments for Resume */
+@media (max-width: 768px) {
+    .resume-grid {
+        grid-template-columns: 1fr 2fr; /* Keep two columns to match screenshot */
+    }
+}
+
+@media (max-width: 600px) {
+    .resume-container {
+        padding: 0.5rem;
+    }
+
+    .resume-header {
+        position: relative; /* Keep relative positioning for the profile picture */
+    }
+
+    .header-text {
+        align-items: center; /* Center the text content on small screens */
+    }
+
+    .resume-header h1 {
+        font-size: 1.5rem;
+        align-self: center; /* Center the name on small screens */
+    }
+
+    .resume-header .title {
+        align-self: center; /* Center the title on small screens */
+    }
+
+    .profile-picture-container {
+        position: static; /* Remove absolute positioning on small screens */
+        margin-top: 1rem; /* Add spacing between text and image */
+    }
+
+    .profile-picture {
+        width: 80px; /* Smaller size for mobile */
+        height: 80px;
+    }
+
+    .references {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .reference-item {
+        width: 90%;
+    }
 }
