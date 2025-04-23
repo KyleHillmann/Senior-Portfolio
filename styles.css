@@ -863,7 +863,6 @@ section ul li::before {
 
 .reference-item h3 {
     font-size: 1rem;
-    color: var(--accent);
     margin-bottom: 0.25rem;
 }
 
