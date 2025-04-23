@@ -41,7 +41,6 @@ body {
 .animate-up { animation: fadeInUp 0.8s var(--ease) forwards; animation-delay: 0.2s; }
 .animate-scale { animation: scaleUp 0.8s var(--ease) forwards; }
 
-/* Progress Bar */
 .progress-container {
     position: fixed;
     top: 0;
@@ -59,7 +58,6 @@ body {
     transition: width 0.3s var(--ease);
 }
 
-/* Header */
 .header {
     display: flex;
     flex-direction: column;
@@ -108,7 +106,6 @@ body {
     animation-delay: 0.2s;
 }
 
-/* Navigation */
 .navbar {
     position: sticky;
     top: 0;
@@ -144,7 +141,6 @@ body {
     outline: none;
 }
 
-/* Sections */
 .content-section {
     padding: 4rem 2rem;
     max-width: 1200px;
@@ -168,7 +164,6 @@ body {
     text-align: center;
 }
 
-/* Grid */
 .grid-2col {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -185,7 +180,6 @@ body {
         "reflection samples";
 }
 
-/* Cards - Restore general styles */
 .card {
     padding: 2rem;
     background-color: var(--secondary);
@@ -202,7 +196,6 @@ body {
     box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
 }
 
-/* Academic section specific card styles */
 .academic-grid .card:nth-child(1) { 
     grid-area: goals;
     min-height: 120px;
@@ -234,7 +227,6 @@ body {
 .personal-grid .card:nth-child(4) { grid-area: community; }
 .personal-grid .reflection { grid-area: reflection; }
 
-/* Timeline */
 .timeline {
     position: relative;
     margin: 4rem 0;
@@ -366,7 +358,6 @@ body {
     }
 }
 
-/* Image Modal */
 .image-container {
     position: relative;
     width: 150px;
@@ -414,7 +405,6 @@ body {
 
 .close-button:hover { background-color: rgba(0, 0, 0, 0.9); }
 
-/* Buttons */
 button {
     background-color: var(--accent);
     color: var(--primary);
@@ -429,7 +419,6 @@ button {
 
 button:hover { background-color: #27ae60; }
 
-/* Work Sample Items */
 .work-sample-item {
     display: flex;
     align-items: center;
@@ -444,7 +433,6 @@ button:hover { background-color: #27ae60; }
 
 .work-sample-item span { flex-grow: 1; }
 
-/* Footer */
 .footer {
     position: relative;
     width: 100vw;
@@ -456,7 +444,6 @@ button:hover { background-color: #27ae60; }
     font-size: 0.9rem;
 }
 
-/* Accessibility */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -467,7 +454,6 @@ button:hover { background-color: #27ae60; }
     border: 0;
 }
 
-/* Reflection */
 .reflection {
     padding: 2rem;
     background-color: var(--secondary);
@@ -506,7 +492,6 @@ button:hover { background-color: #27ae60; }
 
 .fullscreen-button:hover { background-color: #27ae60; }
 
-/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -518,7 +503,7 @@ button:hover { background-color: #27ae60; }
     max-width: 800px;
     max-height: 90vh;
     background-color: rgba(0, 0, 0, 0.8);
-    overflow-y: hidden; /* Allow scrolling for long PDFs */
+    overflow-y: hidden;
 }
 
 .modal-content {
@@ -533,18 +518,18 @@ button:hover { background-color: #27ae60; }
 
 .pdf-container {
     position: fixed;
-    width: 100%; /* Ensure it takes the full width */
-    height: auto; /* Allow height to adjust based on content */
-    overflow: visible; /* Prevent overflow */
-    display: none; /* Use flexbox for alignment */
-    justify-content: center; /* Center the canvas horizontally */
-    align-items: center; /* Center the canvas vertically */
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 #pdfCanvas {
-    width: 100%; /* Set to 100% for responsive scaling */
-    height: auto; /* Allow height to adjust based on content */
-    max-width: 120%; /* Scale up to 120% of its original size */
+    width: 100%;
+    height: auto;
+    max-width: 120%;
     display: block;
 }
 
@@ -565,7 +550,7 @@ button:hover { background-color: #27ae60; }
 }
 
 #pdfContainer {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 50%;
@@ -574,21 +559,21 @@ button:hover { background-color: #27ae60; }
     background: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     padding: 0px;
-    max-height: 90vh; /* Maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    width: 90vw; /* Responsive width */
-    max-width: 1000px; /* Maximum width */
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 90vw;
+    max-width: 1000px;
     border-radius: var(--border-radius);
 }
 
 #pdfContainer canvas {
-    width: 100% !important; /* Override inline styles */
-    height: auto !important; /* Ensure height adjusts */
+    width: 100% !important;
+    height: auto !important;
     display: block;
 }
 
 #pdfContainer .close-button {
-    position: sticky; /* Stays at top while scrolling */
+    position: sticky;
     top: 10px;
     right: 10px;
     background-color: rgba(0, 0, 0, 0.7);
@@ -605,33 +590,32 @@ button:hover { background-color: #27ae60; }
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-/* ---- Resume-Specific Styles ---- */
 .resume-container {
-    max-width: 900px; /* Narrower to match the screenshot */
+    max-width: 900px;
     margin: 1rem auto;
     padding: 1rem;
-    background-color: var(--primary); /* No card-like background to match screenshot */
+    background-color: var(--primary);
     animation: fadeIn 0.8s var(--ease) forwards;
 }
 
 .resume-header {
-    position: relative; /* Allow absolute positioning of the profile picture */
+    position: relative;
     margin-bottom: 1rem;
 }
 
 .header-text {
     display: flex;
-    flex-direction: column; /* Stack the text elements vertically */
-    width: 100%; /* Ensure header-text spans the full width of the container */
-    text-align: left; /* Align text to the left by default */
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
 }
 
 .resume-header h1 {
-    font-size: 2rem; /* Smaller to match screenshot */
+    font-size: 2rem;
     font-weight: 700;
     margin: 0;
     color: var(--text);
-    align-self: flex-start; /* Keep the name left-aligned */
+    align-self: flex-start;
 }
 
 .resume-header .first-name { color: var(--text); }
@@ -642,65 +626,64 @@ button:hover { background-color: #27ae60; }
     color: var(--accent);
     margin: 0.25rem 0;
     padding-bottom: 0.25rem;
-    border-bottom: 2px solid var(--accent); /* Green underline to match screenshot */
+    border-bottom: 2px solid var(--accent);
     display: inline-block;
-    align-self: flex-start; /* Keep the title left-aligned */
+    align-self: flex-start;
 }
 
 .resume-header .contact-info {
     font-size: 0.8rem;
     color: var(--text-secondary);
     margin-top: 0.8rem;
-    text-align: center; /* Center the contact info text */
-    width: 100%; /* Ensure it spans the full width of the header-text */
-    align-self: center; /* Center the contact info block within the flex container */
+    text-align: center;
+    width: 100%;
+    align-self: center;
 }
 
 .profile-picture-container {
-    position: absolute; /* Position the picture absolutely within resume-header */
+    position: absolute;
     top: 0;
-    right: 0; /* Place it in the top-right corner */
+    right: 0;
 }
 
 .profile-picture {
-    width: 100px; /* Smaller size for the top-right image */
+    width: 100px;
     height: 100px;
-    border-radius: 50%; /* Make the image circular */
-    border: 2px solid var(--accent); /* Green border to match the theme */
+    border-radius: 50%;
+    border: 2px solid var(--accent);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    object-fit: cover; /* Ensure the image fits well */
+    object-fit: cover;
     animation: scaleUp 0.8s var(--ease) forwards;
 }
 .title-container {
     display: flex;
-    align-items: center; /* Vertically center the title and line */
-    position: relative; /* For positioning the line */
+    align-items: center;
+    position: relative;
     margin: 0.25rem 0;
 }
 
 .resume-header .title {
     font-size: 1rem;
-    color: var(--primary); /* Black text for contrast inside the green box */
-    background-color: var(--accent); /* Green background for the box */
-    padding: 0.25rem 0.5rem; /* Padding inside the box */
-    border-radius: var(--border-radius); /* Rounded corners */
-    margin: 0; /* Remove default margin */
-    border-bottom: none; /* Remove the previous underline */
+    color: var(--primary);
+    background-color: var(--accent);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    margin: 0;
+    border-bottom: none;
     display: inline-block;
 }
 
 .title-line {
-    height: 2px; /* Thickness of the line */
-    background-color: var(--accent); /* Green line */
-    flex-grow: 1; /* Extend the line to fill the remaining space */
+    height: 2px;
+    background-color: var(--accent);
+    flex-grow: 1;
 }
 
-/* Adjust the profile picture alignment */
 .profile-picture-container {
     position: absolute;
-    top: 60%; /* Center vertically relative to the resume-header */
+    top: 60%;
     right: 0;
-    transform: translateY(-50%); /* Adjust for vertical centering */
+    transform: translateY(-50%);
 }
 
 .profile-picture {
@@ -713,56 +696,54 @@ button:hover { background-color: #27ae60; }
     animation: scaleUp 0.8s var(--ease) forwards;
 }
 
-/* Ensure the header-text doesn't overlap with the profile picture */
 .header-text {
-    padding-right: 120px; /* Space for the profile picture */
+    padding-right: 120px;
 }
 
-/* Adjust for print to match the screenshot */
+
 @media print {
     .resume-header .title {
-        color: var(--primary); /* Black text in print */
-        background-color: var(--accent); /* Green background */
+        color: var(--primary); 
+        background-color: var(--accent);
         border-bottom: none;
     }
     .title-line {
-        background-color: var(--accent); /* Green line in print */
+        background-color: var(--accent);
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
     .title-container {
-        flex-direction: column; /* Stack title and line on small screens */
-        align-items: flex-start; /* Align to the left */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .title-line {
-        width: 100%; /* Full width on small screens */
+        width: 100%;
         margin-left: 0;
-        margin-top: 0.25rem; /* Space below the title */
+        margin-top: 0.25rem;
     }
 
     .header-text {
-        padding-right: 0; /* Remove padding on small screens */
+        padding-right: 0;
     }
 
     .profile-picture-container {
-        position: static; /* Remove absolute positioning */
+        position: static;
         margin-top: 1rem;
-        transform: none; /* Remove transform */
+        transform: none;
     }
 }
 
 .resume-grid {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Fixed two-column layout to match screenshot */
+    grid-template-columns: 1fr 2fr;
     gap: 1.5rem;
 }
 
 .left-column {
     padding: 1rem;
-    background-color: var(--accent); /* Green background for left column */
+    background-color: var(--accent);
     border-radius: var(--border-radius);
 }
 
@@ -771,31 +752,31 @@ button:hover { background-color: #27ae60; }
 }
 
 section h2 {
-    font-size: 1.25rem; /* Smaller to match screenshot */
+    font-size: 1.25rem;
     font-weight: 600;
-    color: var(--primary); /* Black for contrast on green background in left column */
+    color: var(--primary);
     margin: 1rem 0 0.5rem;
-    text-transform: uppercase; /* Match screenshot */
+    text-transform: uppercase;
 }
 
 .left-column section h2 {
-    color: var(--primary); /* Ensure contrast on green background */
+    color: var(--primary);
 }
 
 .right-column section h2 {
-    color: var(--accent); /* Green for right column */
+    color: var(--accent);
 }
 
 section p,
 section ul {
-    font-size: 0.9rem; /* Smaller to match screenshot */
+    font-size: 0.9rem;
     color: var(--text);
     margin: 0 0 0.5rem;
 }
 
 .left-column section p,
 .left-column section ul {
-    color: var(--primary); /* Black for contrast on green background */
+    color: var(--primary);
 }
 
 section ul {
@@ -817,15 +798,15 @@ section ul li::before {
 }
 
 .left-column section ul li::before {
-    color: var(--primary); /* Black bullets on green background */
+    color: var(--primary);
 }
 
 .right-column section ul li::before {
-    color: var(--accent); /* Green bullets on black background */
+    color: var(--accent);
 }
 
 .work-item h3 {
-    font-size: 1rem; /* Smaller to match screenshot */
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text);
     margin: 0.5rem 0 0.25rem;
@@ -835,7 +816,7 @@ section ul li::before {
     font-size: 0.85rem;
     color: var(--text-secondary);
     margin-bottom: 0.25rem;
-    font-style: italic; /* Match screenshot */
+    font-style: italic;
 }
 
 .references {
@@ -878,7 +859,6 @@ section ul li::before {
     opacity: 0.7;
 }
 
-/* Print and Fullscreen Adjustments for Resume */
 @media print {
     .hidden-print,
     .navbar,
@@ -887,7 +867,7 @@ section ul li::before {
     }
 
     body {
-        background-color: #000; /* Match screenshot background */
+        background-color: #000;
         color: #fff;
         padding: 0;
     }
@@ -915,7 +895,7 @@ section ul li::before {
     .left-column section h2,
     .left-column section p,
     .left-column section ul li {
-        color: var(--primary); /* Black for contrast on green background */
+        color: var(--primary);
     }
 
     .resume-header .title {
@@ -925,7 +905,7 @@ section ul li::before {
 
     .resume-header .contact-info {
         color: var(--text-secondary);
-        text-align: center; /* Ensure centered in print */
+        text-align: center;
     }
 
     section h2 {
@@ -959,10 +939,10 @@ section ul li::before {
     }
 }
 
-/* Responsive Adjustments for Resume */
+
 @media (max-width: 768px) {
     .resume-grid {
-        grid-template-columns: 1fr 2fr; /* Keep two columns to match screenshot */
+        grid-template-columns: 1fr 2fr;
     }
 }
 
@@ -972,29 +952,29 @@ section ul li::before {
     }
 
     .resume-header {
-        position: relative; /* Keep relative positioning for the profile picture */
+        position: relative;
     }
 
     .header-text {
-        align-items: center; /* Center the text content on small screens */
+        align-items: center;
     }
 
     .resume-header h1 {
         font-size: 1.5rem;
-        align-self: center; /* Center the name on small screens */
+        align-self: center;
     }
 
     .resume-header .title {
-        align-self: center; /* Center the title on small screens */
+        align-self: center;
     }
 
     .profile-picture-container {
-        position: static; /* Remove absolute positioning on small screens */
-        margin-top: 1rem; /* Add spacing between text and image */
+        position: static;
+        margin-top: 1rem;
     }
 
     .profile-picture {
-        width: 80px; /* Smaller size for mobile */
+        width: 80px;
         height: 80px;
     }
 

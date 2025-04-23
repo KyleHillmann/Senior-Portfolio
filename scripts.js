@@ -1,4 +1,3 @@
-// Event Delegation for Image Modals (unchanged)
 document.addEventListener('click', function(event) {
     if (event.target.matches('.work-sample-item button')) {
         const button = event.target;
@@ -31,7 +30,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Progress Bar (unchanged)
 function updateProgressBar() {
     const scrollPosition = window.scrollY || window.pageYOffset;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -44,7 +42,6 @@ window.addEventListener('scroll', updateProgressBar);
 window.addEventListener('load', updateProgressBar);
 window.addEventListener('resize', updateProgressBar);
 
-// Section Visibility (unchanged)
 const sections = document.querySelectorAll('.content-section');
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -54,20 +51,17 @@ const observer = new IntersectionObserver(entries => {
 
 sections.forEach(section => observer.observe(section));
 
-// PDF Container Functions
 let savedScrollPosition = 0;
 
 async function openPDFContainer(pdfPath) {
     let pdfContainer = document.getElementById('pdfContainer');
     
     if (pdfContainer && pdfContainer.style.display === 'block') {
-        return; // Exit if already open
+        return;
     }
 
-    // Save current scroll position
     savedScrollPosition = window.scrollY;
     
-    // Add scroll lock to body
     document.body.classList.add('scroll-lock');
     document.body.style.top = `-${savedScrollPosition}px`;
 
@@ -99,7 +93,7 @@ async function openPDFContainer(pdfPath) {
 
         let totalHeight = 0;
         let maxWidth = 0;
-        const scale = 1.5; // Reduced scale for better readability
+        const scale = 1.5;
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
@@ -108,12 +102,10 @@ async function openPDFContainer(pdfPath) {
             maxWidth = Math.max(maxWidth, viewport.width);
         }
 
-        // Set canvas dimensions to accommodate all pages
         canvas.width = maxWidth;
         canvas.height = totalHeight;
 
-        // Style the container with a fixed height and scrolling
-        pdfContainer.style.position = 'fixed'; // Changed to fixed for better positioning
+        pdfContainer.style.position = 'fixed';
         pdfContainer.style.zIndex = '1000';
         pdfContainer.style.left = '50%';
         pdfContainer.style.top = '50px';
@@ -121,16 +113,13 @@ async function openPDFContainer(pdfPath) {
         pdfContainer.style.background = '#fff';
         pdfContainer.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
         pdfContainer.style.padding = '5px';
-        pdfContainer.style.maxHeight = '90vh'; // Limit height to 80% of viewport
-        pdfContainer.style.overflowY = 'auto'; // Enable vertical scrolling
-        pdfContainer.style.width = '90vw'; // Set a reasonable width
-        pdfContainer.style.maxWidth = '1000px'; // Maximum width
+        pdfContainer.style.maxHeight = '90vh';
+        pdfContainer.style.overflowY = 'auto';
+        pdfContainer.style.width = '90vw';
+        pdfContainer.style.maxWidth = '1000px';
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
 
-        // Canvas styles
-        canvas.style.width = '100%'; // Full width of container
-        canvas.style.height = 'auto'; // Height adjusts to content
-
-        // Render all pages
         let currentHeight = 0;
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
@@ -155,7 +144,6 @@ function closePDFContainer() {
     if (pdfContainer) {
         pdfContainer.style.display = 'none';
         pdfContainer.innerHTML = '';
-        // Remove scroll lock from body and restore scroll position
         document.body.classList.remove('scroll-lock');
         document.body.style.top = '';
         window.scrollTo(0, savedScrollPosition);
