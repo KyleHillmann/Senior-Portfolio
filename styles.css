@@ -221,10 +221,6 @@ body {
     min-height: 120px;
 }
 
-.reflection h3{
-    color: var(--accent);
-}
-
 .personal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
