@@ -222,7 +222,6 @@ body {
 }
 
 .reflection h3{
-    color: var(--accent);
 }
 
 .personal-grid {
@@ -435,18 +434,63 @@ button:hover { background-color: #27ae60; }
 
 /* Work Sample Items */
 .work-sample-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
+    background-color: var(--secondary);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
-.work-sample-item > * {
-    margin-right: 1rem;
+.work-sample-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.work-sample-item h3 {
+    color: var(--accent);
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
 }
 
-.work-sample-item span { flex-grow: 1; }
+.work-sample-item p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.work-sample-item ul {
+    margin-bottom: 1.5rem;
+}
+
+.work-sample-item .reflection {
+    background-color: rgba(52, 211, 153, 0.05);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--accent);
+    margin-top: 1rem;
+}
+
+.work-sample-item .reflection h4 {
+    color: var(--accent);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.work-sample-item .reflection p {
+    color: var(--text);
+    margin: 0;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .work-sample-item {
+        padding: 1.25rem;
+    }
+    
+    .work-sample-item .reflection {
+        padding: 1.25rem;
+    }
+}
 
 /* Footer */
 .footer {
@@ -1085,4 +1129,29 @@ body.scroll-lock {
     position: fixed;
     width: 100%;
     height: 100%;
+}
+
+/* Thank You Letter Styles */
+.thank-you-letter {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 1rem;
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    margin-top: 1rem;
+}
+
+.thank-you-letter p {
+    margin: 0.5rem 0;
+}
+
+.thank-you-letter p:last-child {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .thank-you-letter {
+        padding: 0.75rem;
+    }
 }
