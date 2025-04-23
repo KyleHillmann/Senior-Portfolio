@@ -221,10 +221,6 @@ body {
     min-height: 120px;
 }
 
-.academic-grid .card.full-width {
-    grid-column: 1 / -1;
-}
-
 .reflection h3{
 }
 
@@ -436,93 +432,20 @@ button {
 
 button:hover { background-color: #27ae60; }
 
-/* Work Sample Styles */
-.work-sample-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.work-sample-header span {
-    font-size: 1rem;
-    color: var(--text);
-}
-
-.work-sample-header button {
-    background-color: var(--accent);
-    color: var(--primary);
-    padding: 0.5rem 1.5rem;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s var(--ease);
-}
-
-.work-sample-header button:hover {
-    background-color: #27ae60;
-}
-
+/* Work Sample Items */
 .work-sample-item {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
-.work-sample-item .image-container {
-    width: 200px;
-    height: 150px;
-    margin: 0;
-    border: none;
-}
-
-.work-sample-item .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-}
-
-.work-sample-item .reflection {
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: var(--secondary);
-    border-radius: var(--border-radius);
-}
-
-.work-sample-item .reflection h3 {
-    color: var(--accent);
-    font-size: 1rem;
+.work-sample-item > * {
+    margin-right: 1rem;
     margin-bottom: 0.5rem;
 }
 
-.work-sample-item .reflection p {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* Update academic grid layout */
-.academic-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 2rem;
-}
-
-@media (max-width: 768px) {
-    .work-sample-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .work-sample-item .image-container {
-        width: 100%;
-        height: 200px;
-    }
-}
+.work-sample-item span { flex-grow: 1; }
 
 /* Footer */
 .footer {
@@ -1217,9 +1140,4 @@ body.scroll-lock {
     color: var(--text-secondary);
     line-height: 1.5;
     margin: 0;
-}
-
-.work-sample-item.full-width {
-    grid-column: 1 / -1;
-    width: 100%;
 }
